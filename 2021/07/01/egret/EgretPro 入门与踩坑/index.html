@@ -23,12 +23,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
-<meta name="description" content="安装开发环境参考：https:&#x2F;&#x2F;docs.egret.com&#x2F;egretpro&#x2F;docs&#x2F;guide&#x2F;getting-started-install 确保引擎版本：egret engine版本是5.3.7+，egret pro版本是1.6.0+ 创建运行3D示例项目3D项目-步骤 打开EgretPro，点击右边新建按钮，打开创建项目页面 选择项目目录路径后，点击右下角新建按钮创建项目 在egr">
+<meta name="description" content="本篇文章主要是总结EgretPro入门和踩坑的经历。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="EgretPro 入门与踩坑">
 <meta property="og:url" content="http://yoursite.com/2021/07/01/egret/EgretPro%20%E5%85%A5%E9%97%A8%E4%B8%8E%E8%B8%A9%E5%9D%91/index.html">
 <meta property="og:site_name" content="雪糕啊哈哈">
-<meta property="og:description" content="安装开发环境参考：https:&#x2F;&#x2F;docs.egret.com&#x2F;egretpro&#x2F;docs&#x2F;guide&#x2F;getting-started-install 确保引擎版本：egret engine版本是5.3.7+，egret pro版本是1.6.0+ 创建运行3D示例项目3D项目-步骤 打开EgretPro，点击右边新建按钮，打开创建项目页面 选择项目目录路径后，点击右下角新建按钮创建项目 在egr">
+<meta property="og:description" content="本篇文章主要是总结EgretPro入门和踩坑的经历。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232255.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232556.png">
@@ -49,7 +49,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233258.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233319.png">
 <meta property="article:published_time" content="2021-07-01T15:38:48.000Z">
-<meta property="article:modified_time" content="2021-07-01T15:38:53.681Z">
+<meta property="article:modified_time" content="2021-07-01T16:03:30.851Z">
 <meta property="article:author" content="雪糕">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232255.png">
@@ -202,7 +202,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">安装开发环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%BF%90%E8%A1%8C3D%E7%A4%BA%E4%BE%8B%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">创建运行3D示例项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3D%E9%A1%B9%E7%9B%AE-%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.</span> <span class="nav-text">3D项目-步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3D%E9%A1%B9%E7%9B%AE-%E5%9D%91%E7%82%B9"><span class="nav-number">2.2.</span> <span class="nav-text">3D项目-坑点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%BF%90%E8%A1%8C2D%E5%B5%8C%E5%A5%973D%E7%A4%BA%E4%BE%8B%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.</span> <span class="nav-text">创建运行2D嵌套3D示例项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2D%E9%A1%B9%E7%9B%AE-%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.1.</span> <span class="nav-text">2D项目-步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2D%E9%A1%B9%E7%9B%AE-%E5%9D%91%E7%82%B9"><span class="nav-number">3.2.</span> <span class="nav-text">2D项目-坑点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">3.3.</span> <span class="nav-text">常见问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2D%E9%A1%B9%E7%9B%AE%E4%B8%8E3D%E9%A1%B9%E7%9B%AE%E9%80%9A%E4%BF%A1"><span class="nav-number">4.</span> <span class="nav-text">2D项目与3D项目通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2D%E5%8F%91%E6%B6%88%E6%81%AF%E5%88%B03D"><span class="nav-number">5.</span> <span class="nav-text">2D发消息到3D</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3D%E5%8F%91%E6%B6%88%E6%81%AF%E5%88%B02D"><span class="nav-number">6.</span> <span class="nav-text">3D发消息到2D</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E9%A1%B9%E7%9B%AE"><span class="nav-number">7.</span> <span class="nav-text">发布项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E9%A1%B9%E7%9B%AE-%E6%AD%A5%E9%AA%A4"><span class="nav-number">7.1.</span> <span class="nav-text">发布项目-步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E9%A1%B9%E7%9B%AE-%E5%9D%91%E7%82%B9"><span class="nav-number">7.2.</span> <span class="nav-text">发布项目-坑点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%BF%90%E8%A1%8C-iOS%E5%B7%A5%E7%A8%8B"><span class="nav-number">8.</span> <span class="nav-text">创建运行 iOS工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B4%E6%98%8E"><span class="nav-number">8.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">8.2.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%9F%E6%9C%BA%E8%BF%90%E8%A1%8C"><span class="nav-number">9.</span> <span class="nav-text">真机运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Egret3DExportTools"><span class="nav-number">10.</span> <span class="nav-text">使用Egret3DExportTools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Egret3DExportTools-%E8%AF%B4%E6%98%8E"><span class="nav-number">10.1.</span> <span class="nav-text">Egret3DExportTools-说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Egret3DExportTools-%E6%AD%A5%E9%AA%A4"><span class="nav-number">10.2.</span> <span class="nav-text">Egret3DExportTools-步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Egret3DExportTools-%E5%9D%91%E7%82%B9"><span class="nav-number">11.</span> <span class="nav-text">Egret3DExportTools-坑点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%8A%A0%E9%97%AE%E9%A2%98"><span class="nav-number">12.</span> <span class="nav-text">附加问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB%E6%92%AD%E6%94%BE%E5%AE%8C%E6%AF%95%E5%9B%9E%E8%B0%83"><span class="nav-number">12.1.</span> <span class="nav-text">动画播放完毕回调</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EgretPro%E7%BC%96%E8%BE%91%E5%99%A8%E6%B7%BB%E5%8A%A0tag"><span class="nav-number">12.2.</span> <span class="nav-text">EgretPro编辑器添加tag</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onCollisionEnter%E6%96%B9%E6%B3%95%E4%B8%8D%E7%94%9F%E6%95%88"><span class="nav-number">13.</span> <span class="nav-text">onCollisionEnter方法不生效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">14.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">安装开发环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%BF%90%E8%A1%8C3D%E7%A4%BA%E4%BE%8B%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">创建运行3D示例项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3D%E9%A1%B9%E7%9B%AE-%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.</span> <span class="nav-text">3D项目-步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3D%E9%A1%B9%E7%9B%AE-%E5%9D%91%E7%82%B9"><span class="nav-number">2.2.</span> <span class="nav-text">3D项目-坑点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%BF%90%E8%A1%8C2D%E5%B5%8C%E5%A5%973D%E7%A4%BA%E4%BE%8B%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.</span> <span class="nav-text">创建运行2D嵌套3D示例项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2D%E9%A1%B9%E7%9B%AE-%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.1.</span> <span class="nav-text">2D项目-步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2D%E9%A1%B9%E7%9B%AE-%E5%9D%91%E7%82%B9"><span class="nav-number">3.2.</span> <span class="nav-text">2D项目-坑点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">3.3.</span> <span class="nav-text">常见问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2D%E9%A1%B9%E7%9B%AE%E4%B8%8E3D%E9%A1%B9%E7%9B%AE%E9%80%9A%E4%BF%A1"><span class="nav-number">4.</span> <span class="nav-text">2D项目与3D项目通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2D%E5%8F%91%E6%B6%88%E6%81%AF%E5%88%B03D"><span class="nav-number">5.</span> <span class="nav-text">2D发消息到3D</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3D%E5%8F%91%E6%B6%88%E6%81%AF%E5%88%B02D"><span class="nav-number">6.</span> <span class="nav-text">3D发消息到2D</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E9%A1%B9%E7%9B%AE"><span class="nav-number">7.</span> <span class="nav-text">发布项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E9%A1%B9%E7%9B%AE-%E6%AD%A5%E9%AA%A4"><span class="nav-number">7.1.</span> <span class="nav-text">发布项目-步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E9%A1%B9%E7%9B%AE-%E5%9D%91%E7%82%B9"><span class="nav-number">7.2.</span> <span class="nav-text">发布项目-坑点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%BF%90%E8%A1%8C-iOS%E5%B7%A5%E7%A8%8B"><span class="nav-number">8.</span> <span class="nav-text">创建运行 iOS工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B4%E6%98%8E"><span class="nav-number">8.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">8.2.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%9F%E6%9C%BA%E8%BF%90%E8%A1%8C"><span class="nav-number">9.</span> <span class="nav-text">真机运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Egret3DExportTools"><span class="nav-number">10.</span> <span class="nav-text">使用Egret3DExportTools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Egret3DExportTools-%E8%AF%B4%E6%98%8E"><span class="nav-number">10.1.</span> <span class="nav-text">Egret3DExportTools-说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Egret3DExportTools-%E6%AD%A5%E9%AA%A4"><span class="nav-number">10.2.</span> <span class="nav-text">Egret3DExportTools-步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Egret3DExportTools-%E5%9D%91%E7%82%B9"><span class="nav-number">11.</span> <span class="nav-text">Egret3DExportTools-坑点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%8A%A0%E9%97%AE%E9%A2%98"><span class="nav-number">12.</span> <span class="nav-text">附加问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB%E6%92%AD%E6%94%BE%E5%AE%8C%E6%AF%95%E5%9B%9E%E8%B0%83"><span class="nav-number">12.1.</span> <span class="nav-text">动画播放完毕回调</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EgretPro%E7%BC%96%E8%BE%91%E5%99%A8%E6%B7%BB%E5%8A%A0tag"><span class="nav-number">12.2.</span> <span class="nav-text">EgretPro编辑器添加tag</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onCollisionEnter%E6%96%B9%E6%B3%95%E4%B8%8D%E7%94%9F%E6%95%88"><span class="nav-number">13.</span> <span class="nav-text">onCollisionEnter方法不生效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AEGithub%E5%9C%B0%E5%9D%80"><span class="nav-number">14.</span> <span class="nav-text">项目Github地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">15.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -223,7 +223,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
@@ -290,17 +290,23 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-07-01 23:38:48 / 修改时间：23:38:53" itemprop="dateCreated datePublished" datetime="2021-07-01T23:38:48+08:00">2021-07-01</time>
+      <time title="创建时间：2021-07-01 23:38:48" itemprop="dateCreated datePublished" datetime="2021-07-01T23:38:48+08:00">2021-07-01</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-07-02 00:03:30" itemprop="dateModified" datetime="2021-07-02T00:03:30+08:00">2021-07-02</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/electron/" itemprop="url" rel="index"><span itemprop="name">electron</span></a>
+          <a href="/categories/egret/" itemprop="url" rel="index"><span itemprop="name">egret</span></a>
         </span>
     </span>
 
@@ -328,7 +334,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <!-- cSpell:disable -->
+        <p>本篇文章主要是总结EgretPro入门和踩坑的经历。</p>
+<a id="more"></a>
+<!-- cSpell:disable -->
 <h2 id="安装开发环境"><a href="#安装开发环境" class="headerlink" title="安装开发环境"></a>安装开发环境</h2><p>参考：<a target="_blank" rel="noopener" href="https://docs.egret.com/egretpro/docs/guide/getting-started-install">https://docs.egret.com/egretpro/docs/guide/getting-started-install</a></p>
 <p>确保引擎版本：egret engine版本是5.3.7+，egret pro版本是1.6.0+</p>
 <h2 id="创建运行3D示例项目"><a href="#创建运行3D示例项目" class="headerlink" title="创建运行3D示例项目"></a>创建运行3D示例项目</h2><h3 id="3D项目-步骤"><a href="#3D项目-步骤" class="headerlink" title="3D项目-步骤"></a>3D项目-步骤</h3><ol>
@@ -518,6 +526,7 @@
 </ul>
 </li>
 </ul>
+<h2 id="项目Github地址"><a href="#项目Github地址" class="headerlink" title="项目Github地址"></a>项目Github地址</h2><p><a target="_blank" rel="noopener" href="https://github.com/blooddot/egret-2d-demo">https://github.com/blooddot/egret-2d-demo</a></p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.egret.com/egretpro/docs/guide/getting-started-install">安装 Egret Pro</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.egret.com/egretpro/video">Egret Pro视频教程</a></li>
