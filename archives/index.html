@@ -21,7 +21,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="雪糕啊哈哈">
@@ -111,6 +111,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -149,11 +150,37 @@
     <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -271,7 +298,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2021/07/01/egret/EgretPro%20%E5%85%A5%E9%97%A8%E4%B8%8E%E8%B8%A9%E5%9D%91/" itemprop="url">
+          <a class="post-title-link" href="/posts/undefined/" itemprop="url">
             <span itemprop="name">EgretPro 入门与踩坑</span>
           </a>
       </div>
@@ -291,7 +318,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2021/01/08/electron/electron-builder%E4%BD%BF%E7%94%A8%E7%AE%80%E4%BB%8B/" itemprop="url">
+          <a class="post-title-link" href="/posts/undefined/" itemprop="url">
             <span itemprop="name">electron-builder使用简介</span>
           </a>
       </div>
@@ -314,7 +341,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2017/02/22/%E9%BB%91%E5%8E%86%E5%8F%B2/Unity%202D%20%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F%EF%BC%88%E4%BA%94%EF%BC%89/" itemprop="url">
+          <a class="post-title-link" href="/posts/undefined/" itemprop="url">
             <span itemprop="name">Unity 2D 乓乓游戏（五）</span>
           </a>
       </div>
@@ -334,7 +361,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2017/02/22/%E9%BB%91%E5%8E%86%E5%8F%B2/Unity%202D%20%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F%EF%BC%88%E5%9B%9B%EF%BC%89/" itemprop="url">
+          <a class="post-title-link" href="/posts/undefined/" itemprop="url">
             <span itemprop="name">Unity 2D 乓乓游戏（四）</span>
           </a>
       </div>
@@ -354,7 +381,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2017/02/22/%E9%BB%91%E5%8E%86%E5%8F%B2/Unity%202D%20%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F%EF%BC%88%E4%B8%89%EF%BC%89/" itemprop="url">
+          <a class="post-title-link" href="/posts/undefined/" itemprop="url">
             <span itemprop="name">Unity 2D 乓乓游戏（三）</span>
           </a>
       </div>
@@ -374,7 +401,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2017/02/22/%E9%BB%91%E5%8E%86%E5%8F%B2/Unity%202D%20%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F%EF%BC%88%E4%BA%8C%EF%BC%89/" itemprop="url">
+          <a class="post-title-link" href="/posts/undefined/" itemprop="url">
             <span itemprop="name">Unity 2D 乓乓游戏（二）</span>
           </a>
       </div>
@@ -394,7 +421,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2017/02/22/%E9%BB%91%E5%8E%86%E5%8F%B2/Unity%202D%20%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F%EF%BC%88%E4%B8%80%EF%BC%89/" itemprop="url">
+          <a class="post-title-link" href="/posts/undefined/" itemprop="url">
             <span itemprop="name">Unity 2D 乓乓游戏（一）</span>
           </a>
       </div>
@@ -414,7 +441,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2017/02/22/%E9%BB%91%E5%8E%86%E5%8F%B2/%E3%80%90%E9%9D%9E%E5%8E%9F%E5%88%9B2D%E6%B8%B8%E6%88%8F%E6%95%99%E7%A8%8B%E3%80%91%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F/" itemprop="url">
+          <a class="post-title-link" href="/posts/undefined/" itemprop="url">
             <span itemprop="name">【非原创2D游戏教程】乓乓游戏</span>
           </a>
       </div>
@@ -463,7 +490,7 @@
   &copy; 2020 – 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fas fa-ice-cream"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">雪糕</span>
 </div>
@@ -486,6 +513,7 @@
     })();
   </script>
 
+<script src="/js/local-search.js"></script>
 
 
 
