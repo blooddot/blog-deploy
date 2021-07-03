@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>EgretPro 入门与踩坑</title>
+    <url>/posts/93f2990b/</url>
+    <content><![CDATA[<p>本篇文章主要是总结EgretPro入门和踩坑的经历。</p>
+<a id="more"></a>
+<!-- cSpell:disable -->
+<h2 id="安装开发环境"><a href="#安装开发环境" class="headerlink" title="安装开发环境"></a>安装开发环境</h2><p>参考：<a href="https://docs.egret.com/egretpro/docs/guide/getting-started-install">https://docs.egret.com/egretpro/docs/guide/getting-started-install</a></p>
+<p>确保引擎版本：egret engine版本是5.3.7+，egret pro版本是1.6.0+</p>
+<h2 id="创建运行3D示例项目"><a href="#创建运行3D示例项目" class="headerlink" title="创建运行3D示例项目"></a>创建运行3D示例项目</h2><h3 id="3D项目-步骤"><a href="#3D项目-步骤" class="headerlink" title="3D项目-步骤"></a>3D项目-步骤</h3><ol>
+<li>打开EgretPro，点击右边新建按钮，打开创建项目页面<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232255.png" alt="20210701232255"></li>
+<li>选择项目目录路径后，点击右下角新建按钮创建项目</li>
+<li>在egret Pro编辑器中点击顶部选择内置或者浏览器选项运行预览</li>
+</ol>
+<h3 id="3D项目-坑点"><a href="#3D项目-坑点" class="headerlink" title="3D项目-坑点"></a>3D项目-坑点</h3><ul>
+<li>编辑器提示3000端口已被占用<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232556.png" alt="20210701232556"><br>  <strong>问题原因</strong>：因为EgretPro打开后会默认启动一个3000端口的http服务器，所以当3000端口被占用时会打开项目失败<br>  <strong>解决方案</strong>：一般造成这种原因是因为我们打开了egret项目进行调试。<ul>
+<li>如果是没有用webpack方式打包的egret项目可以在egret run命令后加上–port参数指定端口号运行，避免冲突。</li>
+<li>如果是webpack方式打包的egret项目，可以在scripts/config.ts文件中搜索port关键字修改启动时的默认端口号。</li>
+<li>可否修改EgretPro编辑器的默认端口？EgretPro是在Egret3D引擎源码的toolkit/compiler/compiler.js文件中设置的，搜索web: 3000可以查询到，但是修改后编辑器会有其他问题，暂时没有找正确的修改方式</li>
+</ul>
+</li>
+</ul>
+<h2 id="创建运行2D嵌套3D示例项目"><a href="#创建运行2D嵌套3D示例项目" class="headerlink" title="创建运行2D嵌套3D示例项目"></a>创建运行2D嵌套3D示例项目</h2><h3 id="2D项目-步骤"><a href="#2D项目-步骤" class="headerlink" title="2D项目-步骤"></a>2D项目-步骤</h3><ol>
+<li><p>创建2D项目</p>
+</li>
+<li><p>将3D项目拷贝到2D项目根目录</p>
+</li>
+<li><p>进入到3D项目，运行npm install 或者 yarn 安装依赖库</p>
+</li>
+<li><p>修改3D项目中的package.json中的build:library命令</p>
+ <figure class="highlight"><table><tr><td class="code"><pre><span class="line">&quot;build:library&quot;: &quot;egret-pro build . --target pro-library&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3D项目中的egretpro.json添加resourceRoot属性</p>
+ <figure class="highlight"><table><tr><td class="code"><pre><span class="line">&quot;resourceRoot&quot;: &quot;[3D项目目录名]/resource/&quot;,</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3D项目中的egretpro.json文件targets对象添加如下属性</p>
+ <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;pro-library&quot;</span>,</span><br><span class="line"> <span class="attr">&quot;projectRoot&quot;</span>: <span class="string">&quot;./pro-library&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3D项目中运行 build:library命令，将3D项目代码打包成pro-library库供2D项目使用</p>
+</li>
+<li><p>将3D项目中libs/modules的oimo和box2d文件夹库拷贝到2D项目中的libs目录中</p>
+</li>
+<li><p>2D项目的index.html和template/index.html中egret.runEgret方法添加pro: true选项</p>
+ <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">egret.runEgret(&#123;</span><br><span class="line">    renderMode: <span class="string">&quot;webgl&quot;</span>, <span class="attr">audioType</span>: <span class="number">0</span>, <span class="attr">calculateCanvasScaleFactor</span>: <span class="function"><span class="keyword">function</span> (<span class="params">context</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> backingStore = context.backingStorePixelRatio ||</span><br><span class="line">            context.webkitBackingStorePixelRatio ||</span><br><span class="line">            context.mozBackingStorePixelRatio ||</span><br><span class="line">            context.msBackingStorePixelRatio ||</span><br><span class="line">            context.oBackingStorePixelRatio ||</span><br><span class="line">            context.backingStorePixelRatio || <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">window</span>.devicePixelRatio || <span class="number">1</span>) / backingStore;</span><br><span class="line">    &#125;,</span><br><span class="line">    pro: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>egretProperties.json文件中添加以下选项，用于编译3D项目生成的代码到2D项目中</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;pro-library&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;path&quot;</span>: <span class="string">&quot;./egret-3D-demo/pro-library&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改Main.ts中的onButtonClick方法，用于显示3D内容到2D项目中</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">async</span> <span class="function"><span class="title">onButtonClick</span>(<span class="params">e: egret.TouchEvent</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> texture = <span class="keyword">await</span> egret.pro.createTextureFrom3dScene(<span class="string">&quot;assets/scenes/box2ds/test.scene.json&quot;</span>, <span class="number">640</span>, <span class="number">1136</span>);</span><br><span class="line">    <span class="keyword">const</span> bitmap = <span class="keyword">new</span> egret.Bitmap(texture);</span><br><span class="line">    <span class="built_in">this</span>.addChild(bitmap);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2D项目运行egret build -e 编译库</p>
+</li>
+<li><p>2D项目运行egret run查看3D项目在2D中的表现</p>
+</li>
+</ol>
+<h3 id="2D项目-坑点"><a href="#2D项目-坑点" class="headerlink" title="2D项目-坑点"></a>2D项目-坑点</h3><ul>
+<li><p>运行build:library时报错<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232703.png" alt="20210701232703"></p>
+</li>
+<li><p>*问题原因**：macOS使用的换行符LF，安装的egret库中的运行脚本是CRLF格式，导致运行node命令时解析出错  </p>
+</li>
+<li><p>*解决方案**：用vscode打开3D项目中的node_modules/.bin/egret-pro文件，右下角将换行符格式改为LF并保存<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232724.png" alt="20210701232724"></p>
+</li>
+<li><p>编译库报错<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232817.png" alt="20210701232817"></p>
+</li>
+<li><p>*问题原因**：2D项目用的Typescript版本太低了，InstanceType是Typescript2.8+的功能  </p>
+</li>
+<li><p>*解决方案**：只是Box2D.d.ts描述文件用了这个特性，可以先将报错处的InstanceType&lt;T&gt;改成any或者new ()=&gt; T</p>
+</li>
+</ul>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><ul>
+<li><p>egretProUtil为空<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232835.png" alt="20210701232835"><br>index.html 没有开启pro选项导致，参考步骤9解决</p>
+</li>
+<li><p>3D场景加载失败<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232854.png" alt="20210701232854"><br>场景资源路径错误，参考步骤5和11解决</p>
+</li>
+<li><p>OIMO，Box2D库找不到<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232909.png" alt="20210701232909"><br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232924.png" alt="20210701232924"><br>2D工程没有添加对应库，参考步骤8解决</p>
+</li>
+</ul>
+<h2 id="2D项目与3D项目通信"><a href="#2D项目与3D项目通信" class="headerlink" title="2D项目与3D项目通信"></a>2D项目与3D项目通信</h2><h2 id="2D发消息到3D"><a href="#2D发消息到3D" class="headerlink" title="2D发消息到3D"></a>2D发消息到3D</h2><ul>
+<li><p>2D项目发送消息代码</p>
+  <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 发送消息方法</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>command 消息名称</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>target 目标对象，填写一个数字即可，保证发送到对象和接受对象一致</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>args 参数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">egret.pro.dispatch(command: <span class="built_in">string</span>, <span class="attr">target</span>: <span class="built_in">any</span>, ...args: <span class="built_in">any</span>[]): <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3D项目接收消息代码</p>
+  <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 监听消息方法</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>eventType 消息名称，对应2D发送到消息名</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>target 目标对象，对应2D发送的对象</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>func 执行方法</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>thisObject 方法作用对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Application.instance.egretProUtil.addEventListener(eventType: <span class="built_in">string</span>, <span class="attr">target</span>: <span class="built_in">any</span>, <span class="attr">func</span>: <span class="function">(<span class="params">...args: <span class="built_in">any</span>[]</span>) =&gt;</span> <span class="built_in">void</span>, <span class="attr">thisObject</span>: <span class="built_in">any</span>): <span class="built_in">void</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 执行方法</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>args 对应发送消息的参数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">func(...args: <span class="built_in">any</span>[]): <span class="built_in">void</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="3D发消息到2D"><a href="#3D发消息到2D" class="headerlink" title="3D发消息到2D"></a>3D发消息到2D</h2><ul>
+<li><p>3D项目发送消息代码</p>
+  <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 发送消息方法</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>command 消息名称</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>target 目标对象，填写一个数字即可，保证发送到对象和接受对象一致</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>args 参数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Application.instance.egretProUtil.dispatch(command: <span class="built_in">string</span>, <span class="attr">target</span>: <span class="built_in">any</span>, ...args: <span class="built_in">any</span>[]): <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2D项目接收消息代码</p>
+  <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 监听消息方法</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>eventType 消息名称，对应2D发送到消息名</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>target 目标对象，对应2D发送的对象</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>func 执行方法</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>thisObject 方法作用对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">egret.pro.addEventListener(eventType: <span class="built_in">string</span>, <span class="attr">target</span>: <span class="built_in">any</span>, <span class="attr">func</span>: <span class="function">(<span class="params">...args: <span class="built_in">any</span>[]</span>) =&gt;</span> <span class="built_in">void</span>, <span class="attr">thisObject</span>: <span class="built_in">any</span>): <span class="built_in">void</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 执行方法</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>args 对应发送消息的参数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">func(...args: <span class="built_in">any</span>[]): <span class="built_in">void</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="发布项目"><a href="#发布项目" class="headerlink" title="发布项目"></a>发布项目</h2><h3 id="发布项目-步骤"><a href="#发布项目-步骤" class="headerlink" title="发布项目-步骤"></a>发布项目-步骤</h3><p>运行egret publish命令进行打包</p>
+<h3 id="发布项目-坑点"><a href="#发布项目-坑点" class="headerlink" title="发布项目-坑点"></a>发布项目-坑点</h3><ul>
+<li><p>提示box2d.min.js文件找不到<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232943.png" alt="20210701232943"></p>
+</li>
+<li><p>*问题原因**：白鹭打包实用的库文件是min.js文件，由于我们拷贝过来的box2d库只有box2d.js，并没有box2d.min.js文件  </p>
+</li>
+<li><p>*解决方案**：在libs/box2d目录下生成min.js文件，最快速简单的解决方法是拷贝一份box2d.js重命名为box2d.min.js</p>
+</li>
+<li><p>提示pro-library.min.js文件找不到<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233044.png" alt="20210701233044"></p>
+</li>
+<li><p>*问题原因**：同上  </p>
+</li>
+<li><p>*解决方案**：在 [3D项目目录名]/pro-library/文件夹下，生成pro-library.min.js。但要注意的是，这个文件包含了3D项目的代码，每次3D项目改完后，要执行build:library命令打包代码，如果要打包2D项目，要每次都拷贝覆盖一份pro-library.min.js文件保证此文件是最新的</p>
+</li>
+</ul>
+<h2 id="创建运行-iOS工程"><a href="#创建运行-iOS工程" class="headerlink" title="创建运行 iOS工程"></a>创建运行 iOS工程</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>egret的iOS原生项目运行3D的原理实际上是创建了一个webview，用于渲染web服务器上的3D场景，3D项目的渲染本质上还是走的H5形式，并非原生渲染的形式</li>
+<li>所以我们要有一个web服务器用于存放3D资源进程调试</li>
+</ul>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>修改3D项目中egretpro.json文件的resourceRoot属性，注意前面的IP和端口号为你的本地IP和2D项目本地调试时候的端口号</p>
+ <figure class="highlight"><table><tr><td class="code"><pre><span class="line">&quot;resourceRoot&quot;: &quot;&lt;http://192.168.31.28:8888/[3D&gt;项目目录名]/resource/&quot;,</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行2D项目调试，会启动一个web服务器，确保3D项目的资源可以通过web访问到</p>
+</li>
+<li><p>打开egret launcher软件，选择2D项目，点击发布设置，填写应用名称和应用包名<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233128.png" alt="20210701233128"></p>
+</li>
+<li><p>点击确认后会在2D项目的同目录生成iOS工程项目</p>
+</li>
+<li><p>实用xcode打开该项目</p>
+</li>
+<li><p>打开AppDelegate.mm文件，将_native.config.diableNativerender设为true<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233149.png" alt="20210701233149"></p>
+</li>
+<li><p>选择模拟器，运行调试查看效果</p>
+</li>
+</ol>
+<h2 id="真机运行"><a href="#真机运行" class="headerlink" title="真机运行"></a>真机运行</h2><ol>
+<li>确保模拟器运行正确的情况下，连接iPhone到Mac并信任</li>
+<li>Xcode选择左上角Xcode -&gt; Preferences -&gt; Accounts界面，登录Apple ID</li>
+<li>选择右下角Manage Certificates按钮<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233208.png" alt="20210701233208"></li>
+<li>打开证书界面后，点击左下角添加证书<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233226.png" alt="20210701233226"></li>
+<li>打开项目设置界面，选择对应开发组<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233242.png" alt="20210701233242"></li>
+<li>点击顶部选择 iPhone设备进行调试<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233258.png" alt="20210701233258"></li>
+<li>首次调试时，iPhone设备要信任证书文件，访问允许网络，可访问web的3D资源（调试时在同一个局域网下即可）</li>
+</ol>
+<h2 id="使用Egret3DExportTools"><a href="#使用Egret3DExportTools" class="headerlink" title="使用Egret3DExportTools"></a>使用Egret3DExportTools</h2><h3 id="Egret3DExportTools-说明"><a href="#Egret3DExportTools-说明" class="headerlink" title="Egret3DExportTools-说明"></a>Egret3DExportTools-说明</h3><p>egret官方有提供Egret3DExportTools工具用于Unity3D中的场景资源导出</p>
+<p>github地址：<a href="https://github.com/egret-labs/egret3d-unityplugin">https://github.com/egret-labs/egret3d-unityplugin</a></p>
+<h3 id="Egret3DExportTools-步骤"><a href="#Egret3DExportTools-步骤" class="headerlink" title="Egret3DExportTools-步骤"></a>Egret3DExportTools-步骤</h3><p>安装和使用，参考：<a href="https://docs.egret.com/egretpro/docs/spec/unity-assets">https://docs.egret.com/egretpro/docs/spec/unity-assets</a></p>
+<h2 id="Egret3DExportTools-坑点"><a href="#Egret3DExportTools-坑点" class="headerlink" title="Egret3DExportTools-坑点"></a>Egret3DExportTools-坑点</h2><ul>
+<li><p>导出资源名中有_#加载会失败</p>
+<p>  <strong>问题原因</strong>：可能和egret资源配置加载有关，具体原因未知</p>
+<p>  <strong>解决方案</strong>：在Unity中先重命名后再导出</p>
+</li>
+<li><p>Unity项目设置的模型Shader类型，导出时请确保设置为Unity的格式</p>
+</li>
+</ul>
+<h2 id="附加问题"><a href="#附加问题" class="headerlink" title="附加问题"></a>附加问题</h2><h3 id="动画播放完毕回调"><a href="#动画播放完毕回调" class="headerlink" title="动画播放完毕回调"></a>动画播放完毕回调</h3><ul>
+<li><strong>问题描述</strong>：在做项目时，发现实体添加了Animation组件后，播放动画时，想要监听动画完成的事件官方文档中没有提供</li>
+<li><strong>解决思路</strong><ul>
+<li>查看官方api说明，并且查看引擎源码，发现有一个AnimationEventType的定义</li>
+<li>全局搜索AnimationEventType没有发现用法，只发现了该对象的枚举值定义</li>
+<li>精简搜索关键字，只搜索AnimationEvent，发现官方示例的AnimationHelper类中有一个onAnimationEvent方法，猜测可能是用于动画状态的回调</li>
+<li>搜索onAnimationEvent方法，发现在Animation源码目录中会派发相应的onAnimationEvent消息出来</li>
+<li>测试后发现果然onAnimationEvent方法是绑定在实体上面的动画回调方法</li>
+<li>该方法的参数类型为AnimationEvent，其中的type属性就是对应的AnimationEventType的枚举值（不过定义文件却是string类型，匪夷所思）</li>
+</ul>
+</li>
+</ul>
+<h3 id="EgretPro编辑器添加tag"><a href="#EgretPro编辑器添加tag" class="headerlink" title="EgretPro编辑器添加tag"></a>EgretPro编辑器添加tag</h3><ul>
+<li><strong>问题描述</strong>：添加多个实体后，我想给不同的实体添加tag，发现只能使用导出时预制的那几个tag，不能像Unity那样添加</li>
+<li><strong>解决思路</strong><ul>
+<li>最简单的解决方法，在Unity中添加tag，再重新导出</li>
+<li>但是导出后会把我原本的EgretPro场景覆盖，又要重新搭建，效率不高</li>
+<li>猜测tag应该是作为某个配置文件保存在项目本地的，所以项目全局搜索一个tag值，并没有搜索到有用的信息</li>
+<li>猜测tag值可能保存在编辑器中，而非项目中</li>
+<li>编辑器目录中搜索一个tag值，发现有用信息<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233319.png" alt="20210701233319"></li>
+<li>原来tag值是配置在引擎库packages/engine目录下的文件</li>
+<li>分别在index.d.ts和index.js文件中添加我们想要的tag值</li>
+<li>重启EgretPro，发现我们添加的tag值果然生效了</li>
+</ul>
+</li>
+</ul>
+<h2 id="onCollisionEnter方法不生效"><a href="#onCollisionEnter方法不生效" class="headerlink" title="onCollisionEnter方法不生效"></a>onCollisionEnter方法不生效</h2><ul>
+<li><strong>问题描述</strong>：因为EgretPro设计思路很多都是借鉴Unity，所以碰撞代码我就直接用onCollisionEnter方法去实现，而且egret中也确实声明了onCollisionEnter方法，但是使用时却没有生效</li>
+<li><strong>解决思路</strong><ul>
+<li>检查代码，并没有写错的感觉</li>
+<li>查看引擎源码，发现虽然d.ts中声明了onCollisionEnter，但是js源码中却并未实现，还是TODO状态，有点坑呀</li>
+<li>看来碰撞检测不能用简单的onCollisionEnter方式做了</li>
+<li>查看示例和源码发现有CollisionManager类，用于专门管理碰撞</li>
+<li>该类附带了raycast，raycastSingle，raycastAll三个方法，分别用于检测碰撞组件返回boolean值，检测单个实体对象，检测所有碰撞组件并返回精确信息</li>
+<li>raycast是我想要的方法，但我想要获取到碰撞后的实体，不只是要一个boolean值，查看方法发现最后一个参数RaycastInfo传入后，可以赋值碰撞信息</li>
+<li>所以传入了后面两个附加参数maxDistance和RaycastInfo</li>
+<li>结果却出现了传入参数后和传入参数前结果不一致的情况</li>
+<li>查看源码发现传入数maxDistance和RaycastInfo后会多走一些逻辑</li>
+<li>其实源码里面已经找到碰撞的实体了，只是返回的是boolean值而已</li>
+<li>我修改了源码返回值，直接把实体返回，达到想要的效果</li>
+<li>并且比传入maxDisatcne和RaycastInfo效率还高</li>
+</ul>
+</li>
+</ul>
+<h2 id="项目Github地址"><a href="#项目Github地址" class="headerlink" title="项目Github地址"></a>项目Github地址</h2><p><a href="https://github.com/blooddot/egret-2d-demo">https://github.com/blooddot/egret-2d-demo</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://docs.egret.com/egretpro/docs/guide/getting-started-install">安装 Egret Pro</a></li>
+<li><a href="https://docs.egret.com/egretpro/video">Egret Pro视频教程</a></li>
+<li><a href="https://mp.weixin.qq.com/s/XZ3jSxY9tTFWRLMzbVY5JQ">Egret Pro 将3D项目发布成Native</a></li>
+<li><a href="https://blog.csdn.net/jiuyuefenglove/article/details/117695587">EgretPro——入门全踩坑</a></li>
+</ul>
+<p>__本文作者__：雪糕<br />__本文地址__： <a href="http://example.com/posts/93f2990b/">http://example.com/posts/93f2990b/</a> <br />__版权声明__：转载请注明出处！</p>
+]]></content>
+      <categories>
+        <category>egret</category>
+      </categories>
+      <tags>
+        <tag>game</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>electron-builder使用简介</title>
+    <url>/posts/1867545/</url>
+    <content><![CDATA[<p>使用electron, 打包必不可免, 官方推荐electron-builder库进行应用打包.<br>本篇主要就工作中用到的electron-builder打包功能进行总结.</p>
+<a id="more"></a>
+<!-- cSpell:disable -->
+
+<h2 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h2><p>项目目录执行命令:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yarn add -D electron-builder</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、构建配置"><a href="#二、构建配置" class="headerlink" title="二、构建配置"></a><a href="https://www.electron.build/configuration/configuration">二、构建配置</a></h2><p>可以直接在package.json中配置,也可以添加electron-builder.yml(yml,json5,toml,js)文件进行配置,以package.json配置为例  </p>
+<h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">&quot;build&quot;: &#123;</span><br><span class="line">  &quot;productName&quot;: &quot;xxxx&quot;,  //String - 项目名,这也是生成的exe文件的前缀名</span><br><span class="line">  &quot;copyright&quot;:&quot;Copyright © year $&#123;author&#125;&quot;, //String - 版权信息</span><br><span class="line"></span><br><span class="line">  <span class="comment">//目录配置</span></span><br><span class="line">  &quot;directories&quot;: &#123;              </span><br><span class="line">    &quot;buildResources&quot;: &quot;build&quot;,  //String - 构建用的资源目录（不会包含在打包后的资源中, 例如nsis要用到的构建配置文件）</span><br><span class="line">    &quot;output&quot;: &quot;dist&quot;, //String - 输出文件夹, 默认输出到dist文件夹</span><br><span class="line">    &quot;app&quot;: &quot;app&quot;, //String  - 应用程序目录, 默认是app,www或工作空间</span><br><span class="line">  &#125;,</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">  &quot;buildDependenciesFromSource&quot;: false,   //Boolean - 是否用源编译开发依赖项</span><br><span class="line">  &quot;nodeGypRebuild&quot;: false,        //Boolean - 是否每次打包前都重新构建node-gyp</span><br><span class="line">  &quot;npmArgs&quot;: [&quot;xxx&quot;],         //Array&lt;String&gt; | String - 直译: 安装应用程序本地依赖（native deps） 时添加的额外命令行参数, 原文: Additional command line arguments to use when installing app native deps. </span><br><span class="line">  &quot;npmRebuild&quot;: true,         //Boolean - 是否在打包应用程序之前重新构建本地依赖</span><br><span class="line"></span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">  &quot;buildVersion&quot;: &quot;xxxx&quot;,     //String - 构建的版本, 对应于MacOS 的CFBundleVersion 和 Windows 元数据属性，默认对应Version, 如果已经定义TRAVIS_BUILD_NUMBER 、 APPVEYOR_BUILD_NUMBER 、 CIRCLE_BUILD_NUM 、 BUILD_NUMBER 、 bamboo.buildNumber 这些环境变量，那么将会被用作 build Version（version.build_number）</span><br><span class="line">  &quot;electronCompile&quot;: true,    //Boolean - 是否使用 electron-compile 来编译应用程序, 注:electronCompile已废弃</span><br><span class="line">  &quot;electronDist&quot;: &quot;~/electron/out/R&quot;, //String - 自定义electron构建路径</span><br><span class="line">  &quot;electronDownload&quot;: &#123; //electron-download 选项  详见:&lt;https://github.com/electron/get#usage&gt;</span><br><span class="line">    &quot;version&quot;: &quot;xxx&quot;, //String - 版本</span><br><span class="line">    &quot;cache&quot;: &quot;xxxx&quot;,  //String - 缓存位置</span><br><span class="line">    &quot;mirror&quot;: &quot;xxxx&quot;, //镜像</span><br><span class="line">    &quot;strictSSL&quot;: false, //Boolean</span><br><span class="line">    &quot;isVerfyChecksum&quot;: false, //Boolean</span><br><span class="line">    &quot;platform&quot;:&quot;xxx&quot;, //“darwin” | “linux” | “win32” | “mas”</span><br><span class="line">    &quot;arch&quot;:&quot;xxxx&quot; //String</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;electronVersion&quot;:  &quot;xxx&quot;,    //String - 打包用的electron版本, 默认为electron electron-prebuilt electron-prebuilt-compile 依赖版本</span><br><span class="line">  &quot;extends&quot;: &quot;xxx&quot;, //String - 内置预设配置或配置文件的路径（相对于项目目录）当前只支持react-cra,如果安装了react-scripts依赖, react-cra会被自动设置，设置为null可以禁用自动检测</span><br><span class="line">  &quot;extraMetadata&quot;: &quot;xxx&quot;, //any - 注入额外属性到package.json中</span><br><span class="line">  &quot;readonly&quot;: false, //Boolean - 应用签名失败时,是否构建失败(用于停止构建签名失败的应用程序) </span><br><span class="line">  &quot;nodeVersion&quot;: &quot;current&quot;, //String - 仅限于libui-based frameworks ，打包所用的NodeJS版本，设置current表示当前运行的NodeJS版本</span><br><span class="line">  &quot;launchUiVersion&quot;: &quot;&quot;, //Boolean | String - 仅限于libui-based frameworks, 你所要打包的 LaunchUI 版本. 仅仅针对于Windows, 默认为适合框架使用的版本</span><br><span class="line">  &quot;framework&quot;: &quot;electron&quot;, //String - 框架名称，electron proton-native libui 默认为electron</span><br><span class="line"></span><br><span class="line">  <span class="comment">//Hooks </span></span><br><span class="line">  &quot;afterPack&quot;: &quot;xxxx&quot;,  //打包后(签名前)执行的函数(文件或模块id的路径)</span><br><span class="line">  &quot;afterSign&quot;: &quot;xxxx&quot;,  //签名后(打包成发行版之前)执行的函数(文件或模块id的路径)</span><br><span class="line">  &quot;artifactBuildStarted&quot;: &quot;xxxx&quot;,   //artifact build(待理解)开始时执行的函数(文件或模块id的路径)</span><br><span class="line">  &quot;artifactBuildCompleted&quot;: &quot;xxxx&quot;,   //artifact build(待理解)完成时执行的函数(文件或模块id的路径)</span><br><span class="line">  &quot;afterAllArtifactBuild&quot;: &quot;xxxx&quot;,    //所有artifact build(待理解)运行完后执行的函数(文件或模块id的路径)</span><br><span class="line">  &quot;onNodeModuleFile&quot;: &quot;xxxx&quot;,         //要在每个节点模块文件上运行的函数(文件或模块id的路径)</span><br><span class="line">  &quot;beforeBuild&quot;: &quot;xxxx&quot;,              //只有npmRebuild配置设置为true时生效, 依赖库被安装或重新编译后执行的函数(文件或模块id的路径).</span><br><span class="line"></span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">  &quot;remoteBuild&quot;: true,          //Boolean - 当前操作系统不支持构建时,使用Electron远程服务构建</span><br><span class="line">  &quot;includePdb&quot;: false,          //Boolean - 是否包含PDB文件(&lt;https://en.wikipedia.org/wiki/Program_database&gt;)</span><br><span class="line">  &quot;removePackageScripts&quot;: true,   //Boolean - 是否从package.json中移除scripts项</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了上述的基本配置,对应不同的平台,还可以有不同的配置参数,如下:  </p>
+<h3 id="MacOS平台配置"><a href="#MacOS平台配置" class="headerlink" title="MacOS平台配置"></a>MacOS平台配置</h3><ul>
+<li>mac: MacOS平台构建选项, <a href="https://www.electron.build/configuration/mac">详见</a>  </li>
+<li>mas: Mac应用程序商店构建选项, <a href="https://www.electron.build/configuration/mas">详见</a>  </li>
+<li>dmg: Mac dmg包构建选项, <a href="https://www.electron.build/configuration/dmg">详见</a>  </li>
+<li>pkg: Mac pkg包构建选项, <a href="https://www.electron.build/configuration/pkg">详见</a>  </li>
+</ul>
+<h3 id="Window平台配置"><a href="#Window平台配置" class="headerlink" title="Window平台配置"></a>Window平台配置</h3><ul>
+<li>win: Windows平台构建选项, <a href="https://www.electron.build/configuration/win">详见</a>  </li>
+<li>nsis: nsis 构建选项, <a href="https://www.electron.build/configuration/nsis">详见</a>  </li>
+<li>nsisWeb: nsis web安装包构建选项, 继承自nsis构建选项, <a href="https://www.dazhuanlan.com/2019/10/10/5d9ef51ae2c29/">详见</a>  </li>
+<li>appx: Windows应用程序商店构建选项, <a href="https://www.electron.build/configuration/appx">详见</a>  </li>
+<li>squirrelWindows: 已废弃</li>
+</ul>
+<h3 id="Linux平台配置"><a href="#Linux平台配置" class="headerlink" title="Linux平台配置"></a>Linux平台配置</h3><ul>
+<li>linux: Linux平台构建选项, <a href="https://www.electron.build/configuration/linux">详见</a>  </li>
+<li>deb: Linux deb包构建选项, <a href="https://www.electron.build/configuration/linux#de">详见</a>  </li>
+<li>snap: Linux snap包构建选项, <a href="https://www.electron.build/configuration/snap">详见</a>  </li>
+<li>appImage: Linux appImage包构建选项, <a href="https://www.electron.build/configuration/linux#appimageoptions">详见</a>  </li>
+<li>rpm: Linux rpm包构建选项, <a href="https://www.electron.build/configuration/linux#LinuxTargetSpecificOptions">详见</a>  </li>
+<li>freebsd: Linux freebsd包构建选项, <a href="https://www.electron.build/configuration/linux#LinuxTargetSpecificOptions">详见</a>  </li>
+<li>p5p: Linux p5p包构建选项, <a href="https://www.electron.build/configuration/linux#LinuxTargetSpecificOptions">详见</a></li>
+<li>apk: Linux apk包构建选项, <a href="https://www.electron.build/configuration/linux#LinuxTargetSpecificOptions">详见</a></li>
+</ul>
+<h3 id="既能配置在build项-又能在每个平台中复写的配置"><a href="#既能配置在build项-又能在每个平台中复写的配置" class="headerlink" title="既能配置在build项, 又能在每个平台中复写的配置"></a>既能配置在build项, 又能在每个平台中复写的配置</h3><ul>
+<li><p><strong>appId</strong> = com.electron.${name} String - 应用程序id</p>
+</li>
+<li><p><strong>artifactName</strong> String - 构建生成的文件名字模板, 默认为 ${productName}-${version}.${ext} (有些平台会有不同的默认值,具体查看各自平台的配置)  </p>
+</li>
+<li><p><strong>compression</strong> = normal “store” | “normal” | “maximum” - 压缩等级 如果要快速测试构建，store 能够显著地缩短构建时间，maximum 不会导致明显的尺寸差异，但是会增加构建时间。</p>
+</li>
+<li><p><strong>files</strong> Array&lt;String | FileSet&gt; | String | FileSet - 打包包含文件 默认包含项目根目录文件</p>
+</li>
+<li><p><strong>extraResources</strong> Array&lt;String |FileSet&gt; | String | FileSet - 外部资源路径,项目目录相对路径,拷贝匹配的目录或文件到应用程序资源目录下(对于MacOS是Contents/Resources, 对于Linux和Windows是resources)  </p>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">FileSet = &#123;</span><br><span class="line">  &quot;from&quot;: &quot;./extraResources/&quot;,    //来源路径</span><br><span class="line">  &quot;to&quot;: &quot;extraResources&quot;          //目标路径</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>extraFiles</strong> Array&lt;String | FileSet&gt; | String | FileSet - 和extraResources类似,只是拷贝目标目录是应用程序内容目录(对于MacOS是Contents,对于Linux和Windows是根目录)</li>
+<li><strong>asar</strong> AsarOptions | Boolean - 是否打包程序源代码为Electron的压缩包格式</li>
+</ul>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">AsarOptions = &#123;</span><br><span class="line">  &quot;smartUnpack&quot;: true,        //是否自动不打包可执行文件</span><br><span class="line">  &quot;ordering&quot;: &quot;xxxx&quot;,         //string</span><br><span class="line">  &quot;asarUnpack&quot;: [             //Array&lt;String&gt;|String 相对于项目目录,指定哪些文件不需要打包进压缩包内</span><br><span class="line">    <span class="string">&quot;xxxx&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>fileAssociations</strong> Array&lt;FileAssociation&gt; | FileAssociation - 关联文件(特定格式的文件,双击后用此应用程序打开)</li>
+</ul>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">FileAssociation = &#123;</span><br><span class="line">  &quot;ext&quot;: &quot;xxxx&quot;, //文件扩展名, 例如png</span><br><span class="line">  &quot;name&quot;: &quot;xxxx&quot;, //名称, 例如PNG, 默认为ext同配置</span><br><span class="line">  &quot;description&quot;: &quot;xxxx&quot;, //只支持Windows操作系统, 文件描述</span><br><span class="line">  &quot;mimeType&quot;: &quot;xxxx&quot;,    //只支持Linux操作系统, 媒体类型</span><br><span class="line">  &quot;icon&quot;: &quot;xxxx&quot;,   //icon路径(MacOS为icns格式, Windows为ico格式), 构建用的资源目录的相对路径, Linux不支持</span><br><span class="line">  &quot;role&quot;:&quot;Editor&quot;,  //只支持MacOS The app’s role with respect to the type 可选值: Editor, Viewer, Shell, None.</span><br><span class="line">  &quot;isPackage&quot;: false,   //只支持MacOS Whether the document is distributed as a bundle. If set to true, the bundle directory is treated as a file. Corresponds to LSTypeIsPackage.</span><br><span class="line">  &quot;protocols&quot;:[&quot;xxxx&quot;], // Array&lt;Protocol&gt; | Protocol - The URL protocol schemes.</span><br><span class="line">  &quot;schemes&quot;:[&quot;xxxx&quot;], // Array&lt;String&gt; - The schemes. e.g. [&quot;irc&quot;, &quot;ircs&quot;].</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>forceCodeSigning</strong> Boolean - 当应用程序签名失败时, 是否打包失败</li>
+<li><strong>electronUpdaterCompatibility</strong> = “&gt;=2.15” String - electronUpdater兼容版本, e.g. &gt;= 2.16, &gt;=1.0.0.</li>
+<li><strong>publish</strong> 发布设置 <a href="https://www.electron.build/configuration/publish">详见</a></li>
+<li><strong>detectUpdateChannel</strong> = true Boolean - (待理解) Whether to infer update channel from application version pre-release components. e.g. if version 0.12.1-alpha.1, channel will be set to alpha. Otherwise to latest.</li>
+<li><strong>generateUpdatesFilesForAllChannels</strong> = false Boolean - (待理解) Please see Building and Releasing using Channels.</li>
+<li><strong>releaseInfo</strong> releaseInfo - 发布信息. 用于命令行使用:  </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">c.releaseInfo.releaseNotes=<span class="string">&quot;new features&quot;</span></span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight"><table><tr><td class="code"><pre><span class="line">releaseInfo = &#123;</span><br><span class="line">  &quot;releaseName&quot;:&quot;xxxx&quot;, //String - 发行名称</span><br><span class="line">  &quot;releaseNotes&quot;:&quot;xxxx&quot;, //String - 发行说明</span><br><span class="line">  &quot;releaseNotesFile&quot;:&quot;xxxx&quot;, //String - 发行说明文件, 默认为release-notes-$&#123;platform&#125;.md (platform值为当前平台 — mac, linux or windows) 或者 release-notes.md 保存在build resources目录下面.</span><br><span class="line">  &quot;releaseDate&quot;:&quot;xxxx&quot;, //String - 发行时间</span><br><span class="line">  &quot;target&quot;:&quot;&quot;   //String | TargetConfiguration 测试后,发现已不存在该字段</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、命令及参数"><a href="#三、命令及参数" class="headerlink" title="三、命令及参数"></a><a href="https://www.electron.build/cli">三、命令及参数</a></h2><p>package.json文件中添加打包执行脚本(以windows 64位包为例)  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">electron-builder --win --x64</span><br></pre></td></tr></table></figure>
+
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><p>electron-builder build                    构建应用 [默认值]<br>electron-builder install-app-deps         下载app依赖<br>electron-builder node-gyp-rebuild         重建自己的本机代<br>electron-builder create-self-signed-cert  为Windows应用程序创建自签名代码签名证书<br>electron-builder start                    使用electronic-webpack在开发模式下运行应用程序(需要electron-webpack模块支持)  </p>
+<h3 id="构建参数"><a href="#构建参数" class="headerlink" title="构建参数"></a>构建参数</h3><p>–mac, -m, -o, –macos   为macOS平台构建 [array]<br>–linux, -l              为linux平台构建 [array]<br>–win, -w, –windows     为windows平台构建 [array]<br>–x64                    构建64位安装包 [boolean]<br>–ia32                   构建32位安装包 [boolean]<br>–armv7l                 构建armv7l安装包 [boolean]<br>–arm64                  构建arm64安装包 [boolean]<br>–dir                    只构建未打包目录. 对于测试特别有用 [boolean]<br>–prepackaged, –pd      预打包应用程序的路径（以可分发的格式打包）(这个参数有点难以理解, <a href="https://www.electron.build/#pack-only-in-a-distributable-format">详见</a>)<br>–projectDir, –project  项目目录的路径。 默认为当前工作目录。<br>–config, -c             配置文件路径。 默认为<code>electron-builder.yml</code>（或<code>js</code>, 或<code>js5</code>), <a href="https://goo.gl/YFRJOM">详见</a>  </p>
+<h3 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h3><p>–publish, -p  发布到GitHub Releases [选项: “onTag”, “onTagOrDraft”, “always”, “never”, undefined]</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>–help     显示帮助 [boolean]<br>–version  显示当前版本号 [boolean]  </p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>electron-builder –win –x64    构建windows 64位版本<br>electron-builder -mwl           为macOS, Windows和Linux构建（同时构建）</p>
+<h2 id="四、参考链接"><a href="#四、参考链接" class="headerlink" title="四、参考链接"></a>四、参考链接</h2><p><a href="https://www.electron.build/">https://www.electron.build/</a><br><a href="https://github.com/electron-userland/electron-builder">https://github.com/electron-userland/electron-builder</a><br><a href="https://github.com/QDMarkMan/CodeBlog/blob/master/Electron/electron-builder%E6%89%93%E5%8C%85%E8%AF%A6%E8%A7%A3.md">https://github.com/QDMarkMan/CodeBlog/blob/master/Electron/electron-builder%E6%89%93%E5%8C%85%E8%AF%A6%E8%A7%A3.md</a><br><a href="https://stackoverflow.com/questions/54978918/what-is-the-purpose-of-buildresources-folder-in-electron-builder-building-proces">https://stackoverflow.com/questions/54978918/what-is-the-purpose-of-buildresources-folder-in-electron-builder-building-proces</a><br><a href="https://blog.csdn.net/qq_38830593/article/details/89843722">https://blog.csdn.net/qq_38830593/article/details/89843722</a><br><a href="https://forum.snapcraft.io/t/how-do-i-make-the-polarr-snap-associate-with-image-files/7316">https://forum.snapcraft.io/t/how-do-i-make-the-polarr-snap-associate-with-image-files/7316</a></p>
+<p>__本文作者__：雪糕<br />__本文地址__： <a href="http://example.com/posts/1867545/">http://example.com/posts/1867545/</a> <br />__版权声明__：转载请注明出处！</p>
+]]></content>
+      <categories>
+        <category>electron</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Unity 2D 乓乓游戏（一）</title>
+    <url>/posts/1d1dd166/</url>
+    <content><![CDATA[<p>【非原创2D游戏教程】乓乓游戏<br><a href="https://blooddot.cool/2017/02/22/%E9%BB%91%E5%8E%86%E5%8F%B2/%E3%80%90%E9%9D%9E%E5%8E%9F%E5%88%9B2D%E6%B8%B8%E6%88%8F%E6%95%99%E7%A8%8B%E3%80%91%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F/">教程目录地址</a></p>
+<a id="more"></a>
+<!-- cSpell:disable -->
+
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702094615.png" alt="20210702094615"></p>
+<p>这是一个只用38行代码就能够做出2d乒乓游戏的教程哟~ 当然，肯定是用unity游戏引擎来做的，安心啦，会一步步教的。<br>给你个gif图，自己看游戏最终效果</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702214949.gif" alt="20210702214949"></p>
+<hr>
+<p>一点用都没有的前言<br>这个游戏灵感来源于1972年的原始乒乓游戏（tm不就是抄的一样么），中文介绍只找到了互动百科，将就着看看咯（<a href="https://baike.baidu.com/item/pong/22463728?fr=aladdin">https://baike.baidu.com/item/pong/22463728?fr=aladdin</a>） (已更新百度百科)<br>先来讨论一下游戏的规则，顺便再学习♂一下Unity的基本知识&lt;(￣︶￣)/<br>就叫游戏的说明好了</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702094734.png" alt="20210702094734"></p>
+<p>游戏规则会和原本的非常相（yi）像（yang），像控制左边和右边的挡板让球弹来弹去，弹到左边的墙，右边的人得分啦，反过来球弹到右边的墙，左边的人得分啦，但是球打到上下的墙肯定不会得分的，只会让球上下弹来弹去，然后弹到左右咯。所以要控制左右的板子接住球并回弹就哦了。其实这些都好废话，又不是zz，看gif图都懂的好伐。<br>来看一下这个球打到板子上的回弹角度设定：</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702094801.png" alt="20210702094801"></p>
+<p>如果球打到顶部的边角，就是那个绿色箭头，那么往上弹<br>达到中间，看红色箭头，往回弹<br>达到下面，蓝色箭头，自己看<br>规则扯完了，其实不讲大家也都知道规则的，只是强迫症要把这段弄一弄</p>
+<hr>
+<p>开始讲Unity相关的东西咯<br>为了做游戏，快用unity，学好unity，走遍天下都有利。<br>首先，自己百度unity去下载和安装，不会装的，那怪我咯(๑<em>•̀ω•́)</em></p>
+<p>关于unity的简介，我就借（chao）鉴（xi）一下百度百科了  </p>
+<blockquote>
+<p>Unity3D是由Unity Technologies开发的一个让玩家轻松创建诸如三维视频游戏、建筑可视化、实时三维动画等类型互动内容的多平台的综合型游戏开发工具，是一个全面整合的专业游戏引擎。Unity类似于Director,Blender game engine, Virtools 或 Torque Game Builder等利用交互的图型化开发环境为首要方式的软件。其编辑器运行在Windows 和Mac OS X下，可发布游戏至Windows、Mac、Wii、iPhone、WebGL（需要HTML5）、Windows phone 8和Android平台。也可以利用Unity web player插件发布网页游戏，支持Mac和Windows的网页浏览。它的网页播放器也被Mac widgets所支持。</p>
+</blockquote>
+<p>顺便吐槽一下，百度百科中文翻译Unity3d竟然叫优美缔3D，瞎了<br>再说一下，Unity虽然做游戏很方便，但是还是要写代码的，可以用C#，Javascript和Boo三种语言来写，选C#吧，微软大法好啊，虽然我因为大学时的C#老师太丑，这些年对C#都很嫌弃，但说实话，C#用起来的确很爽</p>
+<hr>
+<p>装完了Unity没，装完了就赶紧来开启Unity的学习之路吧</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702095337.png" alt="20210702095337"></p>
+<p>激活你的Unity啦，选个人版，不要钱的，当然你有钱你随意<br>不过5.0以前的Unity是要收钱的，但天朝一般都用破解版</p>
+<p>然后你自己注册或登录一下Unity的个人账号就可以进入到以下界面了，不知道怎么注册的，出门左转，问一下路人怎么用浏览器打开百度输入注册Unity账号<br>看图，选下面的New Project，差不多就是新创建一个项目的意思</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702095422.png" alt="20210702095422"></p>
+<p>然后取名字，按照官方的来吧，叫pong<br>自己选项目的路径，最后记得选择2D项目<br>点击Create project创建项目</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702095904.png" alt="20210702095904"></p>
+<p>接下去泡一下泡面，等它loading完吧</p>
+<hr>
+<p>介绍一下Unity基本的操作界面啦看下面(￣y▽￣)╭</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702095904.png" alt="20210702095904"></p>
+<p>Hierarchy（层级视图）：Hierarchy视图是主要放于游戏场景中具体的游戏对象，比如摄像机平面贴图、3D贴图、光源、箱子、球体、胶囊体、平面和地形等。任何一个全新的的游戏工程创建完毕后，默认都会创建一个游戏场景并且将主摄像机添加在该场景的Hierarchy视图中。对于3D游戏来说。摄像机可以让我们以不同的视角观察游戏世界。<br>上面的是百度百科的，我不是安利百度百科，只是我没翻墙</p>
+<p>Project Area（项目区域）：其实就是放我们游戏素材的地方，像Textures（贴图）啦，3D Models（3D模型）啦，Scripts（脚本代码）啦，等等。我们可以直接把这里的素材拖拽到层级视图上面实例化（不过代码不应该叫绑定，不叫实例）</p>
+<p>Scene（场景）：就是显示我们游戏的地方，可以用鼠标拖拽或者用键盘控制场景的上下左右移动，也可以在层级视图双击里面的摄像头或者其他的对象定位到双击的目标</p>
+<p>Inspector（检视视图）：显示当前选择对象的属性。举个栗子，当我们选择Main Camera（主摄像头）的时候，我们能够看到Position（位置），Rotation（旋转角度），Name（名称）等等全部关于摄像头的全部信息</p>
+<p>对于Unity这种组件式的游戏引擎来讲，刚创建的对象什么都没有（包括头发），我们要自己给场景里面添加组件。像Light（光效），Position（位置），Texture（贴图），3D Model（3D模型）等等。我们点击默认创建的Main Camera，可以从Inspector（检视视图）上看到它绑定的初始组件，Transform，Camera，GUI Layer，Flare Layer，Audio Listener。具体干什么用的，等之后用到了再讲吧。简单来说Unity的这种结构就有点像拼机器人，Main Camera就类似机器人的头，头里面有眼睛，耳朵，鼻子，嘴巴等等（这些就类似于刚才绑定在Main Camera上面的组件），把这些组件组合起来就是一个物体，然后游戏是由很多个物体组成的，就和机器人是由头，手，胸，脚等等组合起来的差不多（Main Camera：我来组成头部）</p>
+<p>变换工具（上图中的左上角，具体看下图）：</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702100051.png" alt="20210702100051"></p>
+<p>从左到右依次是<br>手型工具（快捷键Q）：按住鼠标左键拖动视角<br>移动工具（快捷键W）：选择物体后，物体会出现方向轴，拖动方向轴可以移动物体<br>旋转工具（快捷键E）：选择物体后，物体会出现旋转轴，拖动旋转轴可以旋转物体<br>缩放工具（快捷键R）：选择物体后，物体会出现缩放轴，拖动缩放轴可以缩放物体<br>我反正没用快捷键，不过用多了撸啊撸放技能速度应该能提升吧（笑）  </p>
+<p>播放暂停步进工具条：</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702100159.png" alt="20210702100159"></p>
+<p>从左到右依次是<br>播放：开始游戏，点击以后开始调试游戏，并且该按钮变成停止按钮，点击停止按钮来停止调试游戏<br>暂停：当在调试游戏的时候，可以暂停游戏，修改一些数据，资源，脚本等来查看修改后的表现，不过在停止播放后，暂停游戏中修改的东西就会还原回播放之前的状态哦<br>步进：前进到下一帧，关于帧频这个东西，如果不知道的话，可以自行百度以上是Unity编辑器的简单介绍，下面要进入游戏主体教程了哟吼吼吼吼</p>
+<p>__本文作者__：雪糕<br />__本文地址__： <a href="http://example.com/posts/1d1dd166/">http://example.com/posts/1d1dd166/</a> <br />__版权声明__：转载请注明出处！</p>
+]]></content>
+      <categories>
+        <category>黑历史</category>
+      </categories>
+      <tags>
+        <tag>game</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Unity 2D 乓乓游戏（三）</title>
+    <url>/posts/60159eec/</url>
+    <content><![CDATA[<p>【非原创2D游戏教程】乓乓游戏<br><a href="https://blooddot.cool/2017/02/22/%E9%BB%91%E5%8E%86%E5%8F%B2/%E3%80%90%E9%9D%9E%E5%8E%9F%E5%88%9B2D%E6%B8%B8%E6%88%8F%E6%95%99%E7%A8%8B%E3%80%91%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F/">教程目录地址</a></p>
+<a id="more"></a>
+<!-- cSpell:disable -->
+
+<p>给墙壁加上物理属性（让它能够和之后的小球基情的撞击）<br>怎么加呢，不用担心啦，Unity就是因为它神奇的物理引擎而出名的，我们只要使用Unity提供的Collider组件就可以给墙壁添加物理碰撞属性啦，让我们先选中四个墙壁</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702205833.png" alt="20210702205833"></p>
+<p>然后我们在右边的Inspector（检视）面板点击Add Component（添加组件），然后依次选择Physics2D-&gt;Box Collider2D</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702205855.png" alt="20210702205855"></p>
+<p>不用改参数哦，Unity就是这么智能，默认把碰撞框的大小设置成图片大小</p>
+<p>然后来Scene（场景）里面看看吧，每个墙壁是不是都有绿色边框围绕啊，那就是碰撞框</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702205955.png" alt="20210702205955"></p>
+<p>我们再来添加一下中间的虚线</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702210258.png" alt="20210702210258"></p>
+<p>放心老哥，你没瞎，选中下载虚线</p>
+<p>老规矩，设置一下Pixels Per Unit为1</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702210334.png" alt="20210702210334"></p>
+<p>调整一下中间虚线的位置，和下图差不多就行了，虚线就不用添加物理组件了，它只是用来装饰的玩意</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702210358.png" alt="20210702210358"></p>
+<p>轮到球拍登场了快下图</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702210754.png" alt="20210702210754"></p>
+<p>选中下载图片吧~<br>也是把Pixels Per Unit设置为1，这我就懒得贴图了<br>拖两个球拍的图片放到一左一右，作为我们控制的两个玩家，强迫症记得对其哟~</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702210538.png" alt="20210702210538"></p>
+<p>__本文作者__：雪糕<br />__本文地址__： <a href="http://example.com/posts/60159eec/">http://example.com/posts/60159eec/</a> <br />__版权声明__：转载请注明出处！</p>
+]]></content>
+      <categories>
+        <category>黑历史</category>
+      </categories>
+      <tags>
+        <tag>game</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Unity 2D 乓乓游戏（二）</title>
+    <url>/posts/2d0b3dbe/</url>
+    <content><![CDATA[<p>【非原创2D游戏教程】乓乓游戏<br><a href="https://blooddot.cool/2017/02/22/%E9%BB%91%E5%8E%86%E5%8F%B2/%E3%80%90%E9%9D%9E%E5%8E%9F%E5%88%9B2D%E6%B8%B8%E6%88%8F%E6%95%99%E7%A8%8B%E3%80%91%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F/">教程目录地址</a></p>
+<a id="more"></a>
+<!-- cSpell:disable -->
+
+<p>来设置一下摄像头先吧<br>我们在Hierarchy（层级）面板中选择Main Camera，如下图</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702114640.png" alt="20210702114640"></p>
+<p>然后我们把目光焦点放到右侧的Inspector（检视）面板，将Background（背景）颜色改成黑色，设置图中的Size等等参数（你照着图中抄就好了）</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702114712.png" alt="20210702114712"></p>
+<hr>
+<p>开始创建上下左右的墙壁了~<br>我们要添加四面墙壁到游戏里面，在游戏里面这些墙壁的对象叫做Sprite（精灵），为什么叫这个英文名和中文翻译名，鬼才知道，或者我们也可以叫另一个稍微明白点的名字Texture（贴图）<br>快把下面的图片下载下来</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/3940f603918fa0ec622c309a2f9759ee3f6ddbca.png" alt="3940f603918fa0ec622c309a2f9759ee3f6ddbca"></p>
+<p>你眼睛没有瞎，上面图片是白的，你选中看看就知道了<br>把上面的图片放到项目的Assets文件夹里，我习惯在Assets里创建一个Sprites文件夹，把图片资源放在这个文件夹里面<br>如下图所示</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702115315.png" alt="20210702115315"></p>
+<p>Materials文件夹：用于存放Unity里面创建的Material<br>Prefabs文件夹：用于存放Unity里面创建的Prefab，预制体（暂时听不懂没关系）<br>Scenes文件夹：用于存放Unity里面创建的Scene，场景其实就是游戏场景，你可以保存一下当前的项目，保存的后缀名是.unity文件，这个其实就是当前的Unity场景，我们保存到Scenes文件夹里面<br>Scripts文件夹：用于存放Unity里面创建的Script，也就是代码<br>Sprites文件夹：用于存放图片素材  </p>
+<hr>
+<p>创建游戏里面用到的墙壁吧我们选择Sprites文件夹，选中里面的两个墙壁图片，然后将Inspector（检视）面板中的属性设置为下图</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702115412.png" alt="20210702115412"></p>
+<p>其实就只要设置Pixels Per Unit这个参数为1啦，这个参数是干嘛用的呢，从字面意思看是像素每单位，其实差不多就是这个意思了，就是多少单位占1个像素的意思，当我们设置为1的时候，那么墙壁的就是1个单位对应1个像素了（其实一般游戏框架里面都是默认这样，并没有这个参数可以设置的）</p>
+<p>把刚才的墙壁加入到游戏场景中先在Sprites文件夹里选中一个竖着的墙，然后拖拽到Scene（场景）面板中，如下图</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702115412.png" alt="20210702115412"></p>
+<p>然后再拖两根横着的墙和一根竖着的墙，强迫症患者赶快对齐这四根棒子</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702115708.png" alt="20210702115708"></p>
+<p>用鼠标拖肯定对不齐的，在左边的Hierarchy（层级）面板一根选中墙壁，然后在右边的Inspector（检视）面板输入坐标来对齐吧</p>
+<p>记得把墙壁重命名啊</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702115738.png" alt="20210702115738"></p>
+<p>__本文作者__：雪糕<br />__本文地址__： <a href="http://example.com/posts/2d0b3dbe/">http://example.com/posts/2d0b3dbe/</a> <br />__版权声明__：转载请注明出处！</p>
+]]></content>
+      <categories>
+        <category>黑历史</category>
+      </categories>
+      <tags>
+        <tag>game</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Unity 2D 乓乓游戏（五）</title>
+    <url>/posts/b8a642ce/</url>
+    <content><![CDATA[<p>【非原创2D游戏教程】乓乓游戏<br><a href="https://blooddot.cool/2017/02/22/%E9%BB%91%E5%8E%86%E5%8F%B2/%E3%80%90%E9%9D%9E%E5%8E%9F%E5%88%9B2D%E6%B8%B8%E6%88%8F%E6%95%99%E7%A8%8B%E3%80%91%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F/">教程目录地址</a></p>
+<a id="more"></a>
+<!-- cSpell:disable -->
+
+<p>做个球<br>先把下面这个球的图片下载一下</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212829.png" alt="20210702212829"></p>
+<p>然后设置一下我们刚才导入的图片</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212855.png" alt="20210702212855"></p>
+<p>把球的图片拖到场景里面来吧，看下面</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212915.png" alt="20210702212915"></p>
+<p>给球添加一下Collider（碰撞器）组件<br>Add Component-&gt;Physics 2D-&gt;Box Collider 2D</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212934.png" alt="20210702212934"></p>
+<p>我们的球是要在碰到墙的时候回弹回来的，举个栗子，当面对面碰到墙的时候，是直接回弹回来，当以45度朝着墙碰的时候，它会以-45度回弹回来</p>
+<p>听起来有些复杂，涉及到了数学相关的知识，但Unity关于这方面提供了很完善的支持，用它自带的Physics Material，就能够实现回弹的效果，不用管其他杂七杂八的事情</p>
+<p>让我们来创建一个Physics2D Material吧<br>在Project Area（项目区域）里面一次选择Create-&gt;Physics2D Material，然后命名为BallMaterial<br>在Inspector（检视）面板里面设置一下</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213010.png" alt="20210702213010"></p>
+<p>可以看到我们将Friction（摩擦力）设置为0 Bounciness（反弹力）设置为1</p>
+<p>然后在球的Collider的Material设置一下刚才创建的Material</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213036.png" alt="20210702213036"></p>
+<p>给球添加一下Rigidbody<br>Add Component-&gt;Physics 2D-&gt;Rigidbody 2D<br>然后设置一下参数，像下面这样子</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213056.png" alt="20210702213056"></p>
+<p>好了，我们再来给球添加一个脚本，让它动起来吧<br>Add Component-&gt;New Script，并命名为Ballusing<br>看下面的代码</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">UnityEngine;</span><br><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Ball</span> : <span class="title">MonoBehaviour</span> &#123;</span><br><span class="line"><span class="keyword">public</span> <span class="built_in">float</span> speed = <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// Initial Velocity</span></span><br><span class="line">        GetComponent&lt;Rigidbody2D&gt;().velocity = Vector2.right * speed;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后再加一个speed的变量，用来控制球速，并在初始化的时候，给球一个向右的速度，让它动起来<br>点击调试，可以看到球在两个球拍之间回弹</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213307.gif" alt="20210702213307"></p>
+<p>好了，直线的回弹已经有效果了，斜着的回弹我们要实现下面这种回弹的方向</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213337.png" alt="20210702213337"></p>
+<p>我们要给Ball脚本添加一个OnCollisionEnter2D方法，用来处理碰撞到物体时的回弹角度</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213407.png" alt="20210702213407"></p>
+<p>上面这个图是展示各个方向的向量值<br>我们要确定的是，弹到球拍上方，中间和下方的向量值，比较发现，上中下是根据Y轴的值来区分的，而且都在-1到1的区间内，我们通过下面的方式来计算<br>|| 1 &lt;- at the top of the racket<br>||<br>|| 0 &lt;- at the middle of the racket<br>||<br>|| -1 &lt;- at the bottom of the racket</p>
+<p>那我们通过什么来确认球的Y轴值呢，这里的Y轴值不是指Y轴的坐标，而是只计算回弹方向的Y轴值，很明显，我们是球打在球拍上，球相对与球拍的位置，就是确认回弹方向的Y轴值，所以我们可以通过球拍的高度来计算Y轴值<br>代码如下：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="built_in">float</span> <span class="title">hitFactor</span>(<span class="params">Vector2 ballPos, Vector2 racketPos,</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="built_in">float</span> racketHeight</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// ascii art:</span></span><br><span class="line">    <span class="comment">// || 1 &lt;- at the top of the racket</span></span><br><span class="line">    <span class="comment">// ||</span></span><br><span class="line">    <span class="comment">// || 0 &lt;- at the middle of the racket</span></span><br><span class="line">    <span class="comment">// ||</span></span><br><span class="line">    <span class="comment">// || -1 &lt;- at the bottom of the racket</span></span><br><span class="line">    <span class="keyword">return</span> (ballPos.y - racketPos.y) / racketHeight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在碰撞方法里面分别判断左球拍，和右球拍的回弹计算</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnCollisionEnter2D</span>(<span class="params">Collision2D col</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// Note: &#x27;col&#x27; holds the collision information. If the</span></span><br><span class="line">    <span class="comment">// Ball collided with a racket, then:</span></span><br><span class="line">    <span class="comment">// col.gameObject is the racket</span></span><br><span class="line">    <span class="comment">// col.transform.position is the racket&#x27;s position</span></span><br><span class="line">    <span class="comment">// col.collider is the racket&#x27;s collider</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Hit the left Racket?</span></span><br><span class="line">    <span class="keyword">if</span> (col.gameObject.name == <span class="string">&quot;RacketLeft&quot;</span>) &#123;</span><br><span class="line">        <span class="comment">// Calculate hit Factor</span></span><br><span class="line">        <span class="built_in">float</span> y = hitFactor(transform.position,</span><br><span class="line">        col.transform.position,</span><br><span class="line">        col.collider.bounds.size.y);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Calculate direction, make length=1 via .normalized</span></span><br><span class="line">        Vector2 dir = <span class="keyword">new</span> Vector2(<span class="number">1</span>, y).normalized;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Set Velocity with dir * speed</span></span><br><span class="line">        GetComponent&lt;Rigidbody2D&gt;().velocity = dir * speed;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Hit the right Racket?</span></span><br><span class="line">    <span class="keyword">if</span> (col.gameObject.name == <span class="string">&quot;RacketRight&quot;</span>) &#123;</span><br><span class="line">        <span class="comment">// Calculate hit Factor</span></span><br><span class="line">        <span class="built_in">float</span> y = hitFactor(transform.position,</span><br><span class="line">        col.transform.position,</span><br><span class="line">        col.collider.bounds.size.y);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Calculate direction, make length=1 via .normalized</span></span><br><span class="line">        Vector2 dir = <span class="keyword">new</span> Vector2(<span class="number">-1</span>, y).normalized;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Set Velocity with dir * speed</span></span><br><span class="line">        GetComponent&lt;Rigidbody2D&gt;().velocity = dir * speed;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>好了，试试看吧，现在已经可以让球自由的弹来弹去了</p>
+<hr>
+<p>总结♂<br>在这个教程里，我们学会了安装和使用Unity，能够创建场景，添加文理，运用基本的Unity物理系统和写一些简单的脚本</p>
+<p>记住啊，Unity用起来很简单，我们大多时候只需要用鼠标操作，以及些一些简单的脚本，就能够实现很多牛逼的效果，所以不用太害怕去创造新东西。<br>下面列出一堆，你可以继续为这个游戏添加的有趣功能<br>1.给小球添加追踪的效果<br>2.添加音效<br>3.添加一个显示分数<br>4.让球动的越来越快<br>5.加一个AI，现在我们只能左手和右手玩。。。<br>6.添加一个初始菜单和结算界面7.发挥你的想象吧~</p>
+<p>__本文作者__：雪糕<br />__本文地址__： <a href="http://example.com/posts/b8a642ce/">http://example.com/posts/b8a642ce/</a> <br />__版权声明__：转载请注明出处！</p>
+]]></content>
+      <categories>
+        <category>黑历史</category>
+      </categories>
+      <tags>
+        <tag>game</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Unity 2D 乓乓游戏（四）</title>
+    <url>/posts/d7388789/</url>
+    <content><![CDATA[<p>【非原创2D游戏教程】乓乓游戏<br><a href="https://blooddot.cool/2017/02/22/%E9%BB%91%E5%8E%86%E5%8F%B2/%E3%80%90%E9%9D%9E%E5%8E%9F%E5%88%9B2D%E6%B8%B8%E6%88%8F%E6%95%99%E7%A8%8B%E3%80%91%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F/">教程目录地址</a></p>
+<a id="more"></a>
+<!-- cSpell:disable -->
+
+<p>对了，还要重命名球拍，Unity自动生成的名字看着实在难受</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702211005.png" alt="20210702211005"></p>
+<p>球拍也要加上物理组件Box Collider 2D，别问我为什么，难道你用空气做的球拍打球么</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702211041.png" alt="20210702211041"></p>
+<hr>
+<p>接下来是个好玩的知识点了，我们在游戏里面是需要控制球拍上下滑动移动坐标的，但当球拍上下移动到撞墙了，我们怎么去做出一个撞墙的效果，让球拍不会跑出墙外面呢<br>轮到Rigidbody（刚体）登场了，以下是百度百科：</p>
+<blockquote>
+<p>刚体是指在运动中和受力作用后，形状和大小不变，而且内部各点的相对位置不变的物体。绝对刚体实际上是不存在的，只是一种理想模型，因为任何物体在受力作用后，都或多或少地变形，如果变形的程度相对于物体本身几何尺寸来说极为微小，在研究物体运动时变形就可以忽略不计。把许多固体视为刚体，所得到的结果在工程上一般已有足够的准确度。但要研究应力和应变，则须考虑变形。由于变形一般总是微小的，所以可先将物体当作刚体，用理论力学的方法求得加给它的各未知力，然后再用变形体力学，包括材料力学、弹性力学、塑性力学等的理论和方法进行研究。</p>
+</blockquote>
+<p>我们可以给有刚体的物体添加各种属性实现很多效果，比如可以给它添加重力，让物体能够自由落体啦，让物体碰撞到添加了碰撞体的物体后不能继续穿墙移动啦<br>一般来说，使用了物理组件的话，移动的物体一般都要添加Rigidbody（刚体）组件的，有人要问为什么了，我也不知道，原文没写哈哈哈（我猜是一般物理游戏移动的东西都不能穿墙或者穿地面吧）</p>
+<p>我们选中那两块球拍，然后在Inspector（检视）面板里面依次按以下顺序添加Rigidbody 2D组件 AddComponent-&gt;Physics 2D-&gt;Rigidbody 2D。然后修改Rigidbody 2D属性，把Gravity（重力）设为0，因为我们在平面上控制球拍，并不需要球拍自由落体般下落，然后勾选Freeze Rotation Z（冻结Z轴旋转），为了让球拍碰撞后不旋转，然后设置Collision Dectection（碰撞检测）为Continuous（持续的），并且设置Interpolate为Interpolate（内插值），查了一下，设置后可以基于上一帧的变换来平滑本帧变换，差不多就是移动的时候看起来顺畅一点，没有卡的意思。</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212025.png" alt="20210702212025"></p>
+<p>好了，接下来开始写代码了，怕不怕━((<em>′д｀)爻(′д｀</em>))━!!!!<br>我们需要写一个脚本来控制球拍的移动，选中球拍，然后在右边的Inspector（检视）面板里面添加脚本 Add Component-&gt;New Script，取名叫MoveRacket，移动球拍的意思，选择CSharp语言</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212131.png" alt="20210702212131"></p>
+<p>我们在Project（项目）面板双击打开创建的脚本，打开后差不多是这个样子</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MoveRacket</span> : <span class="title">MonoBehaviour</span> &#123;</span><br><span class="line">    <span class="comment">// Use this for initialization</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>)</span> &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>)</span> &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到里面有两个方法，Start方法是这个类初始化的时候运行的，就是你把这个脚本绑定在哪个物体上，当这个物体创建后，这个Start方法就会运行，然后这个Update方法是会一直运行的，大概是每秒运行60次的样子，反正根据设置的帧频来的</p>
+<p>但Update方法有个缺点，就是你游戏卡的时候，我们一般叫掉帧，也就掉帧频啦，Update是根据帧频来计算运行的次数的，那么帧频掉了，Update方法当然执行的次数就会不太准，对于我们这种要实时计算碰撞的游戏来说是不太好的<br>所以轮到FixedUpdate方法出现了，Fixed是固定的意思，那么这个方法我们也就可以猜到了，就是不管我们游戏帧频怎么样算，这个方法都是在固定的时间点执行的，不会受影响，对于物理游戏来说，这个方法是再好不过的了。</p>
+<p>好，我们把Start方法和Update方法删了（反正用不到，占着位置干嘛，我又不是靠代码行数来算工资的），然后写一个FiexdUpdate方法</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MoveRacket</span> : <span class="title">MonoBehaviour</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FixedUpdate</span> (<span class="params"></span>)</span> &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个名字啊，不要弄错了啊，如果你是用的VS来写代码，可以用Ctrl+Shift+M快捷键来创建一些Unity内置的方法，这样就不用自己手打名字，也就不会搞错啦^o^不要忘记了我们创建这个代码是为了让球拍移动的，由于球拍添加了Rigidbody，所以我们可以用Rigidbody来移动球拍，Rigidbody里面有个属性叫velocity，就是刚体的速度向量，我摘抄一段圣典里面的话<br>在大多数情况下，你不应该直接修改速度，因为这会导致不真实的行为。在每个物理步，不要再每个物体的速度，这将导致不真实的物理模拟。一个典型的例子，当你在第一人称射击游戏中使用跳跃的时候改变速度，因为你想立即改变速度。<br>但我们这个不是真是的物理模拟啊，我只是要让拍子在游戏里上下移动而已，我又不管重力什么的。这玩意里面既然有个向量的单词，那肯定是向量啦，我们来复习一下向量是啥（其实就是XY坐标）</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212344.png" alt="20210702212344"></p>
+<p>一目了然吧，我们要上下移动，所以要给球拍一个向上或是向下的向量，其实就是Y轴的向量然后有人要问了，我们这个向量哪里可以得到啊<br>所以说Unity引擎很好呢，引擎里面有个Input类，里面提供了一系列方法获取用户输入的信息，我们这次就用GetAxisRaw这个方法，直译就是获取原始轴，大致就是用户通过输入控制器提供改变坐标轴的值，然后用这个方法来获取控制器改变的坐标轴的值。<br>我们回到编辑器，依照下列顺序打开InputManager，Edit-&gt;Project Settings-&gt;Input</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212414.png" alt="20210702212414"></p>
+<p>可以看到一个列表，其实这些都是输入控制器，我们这次就用默认自带的Vertical来控制球拍吧<br>写两句代码来移动球拍吧</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MoveRacket</span> : <span class="title">MonoBehaviour</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> speed = <span class="number">30</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> axis = <span class="string">&quot;Vertical&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FixedUpdate</span> (<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">float</span> v = Input.GetAxisRaw(axis);</span><br><span class="line">        GetComponent&lt;Rigidbody2D&gt;().velocity = <span class="keyword">new</span> Vector2(<span class="number">0</span>, v) * speed;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到我们通过Input.GetAxisRaw来获取了一个输入值，然后复制给Rigidbody2D的速度向量Y坐标上，看了上面的向量图可以知道，赋值为正是向上移动，赋值为负是向下移动。我们再回过头来看输入控制器的截图可以发现“S”键对应的是Negative Button，“W”键对应的是Positve Button，Negative数学里翻译是负的意思，也就是S是输入负值，Positive数学里翻译是正的意思，那么W就是正值了，所以赋值给Rigidbody2D的速度向量后，按“S”键是向下移动，“W”键是向上移动，和我们习惯的操作一样，真方便啊~</p>
+<p>然后speed是控制移动的速度，我们先设置为30吧。我们来运行一下游戏，发现可以通过S和W键来控制球拍的移动了，是不是有点小激动啊</p>
+<p>给两块球拍添加不同的输入控制器但是我们只是想控制单块球拍的移动啊，如果用一个控制器控制两块球拍，玩个球啊，打着多没意思啊<br>那现在就要给两块球拍添加不同的控制器了，也很简单<br>我们在控制器页面输入控制器的数量，多加一位，并把新的控制器命名为Vertical2，设置方向键控制正负按钮</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212540.png" alt="20210702212540"></p>
+<p>然后再选中右边的板子，在Inspector（检视）面板里，将Script组件里的Axis属性换成Vertical2<br>跑一下，哦耶，我们可以左手控制左球拍右手控制右球拍了~</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212650.gif" alt="20210702212650"></p>
+<p>__本文作者__：雪糕<br />__本文地址__： <a href="http://example.com/posts/d7388789/">http://example.com/posts/d7388789/</a> <br />__版权声明__：转载请注明出处！</p>
+]]></content>
+      <categories>
+        <category>黑历史</category>
+      </categories>
+      <tags>
+        <tag>game</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【非原创2D游戏教程】乓乓游戏</title>
+    <url>/posts/dbdef186/</url>
+    <content><![CDATA[<p>原帖链接:<a href="https://tieba.baidu.com/p/4991749471?pid=104433992759&amp;cid=#104433992759">https://tieba.baidu.com/p/4991749471?pid=104433992759&amp;cid=#104433992759</a></p>
+<a id="more"></a>
+<!-- cSpell:disable -->
+
+<p>写在开头的碎碎念：<br>做了几年的游戏，因为很讨厌大学时教C#的老师，所以对Unity一直没啥兴趣。但想了好久了（大概两年？），还是想做自己想要的游戏，因为一直喜欢玩2D的游戏，并且2D游戏成本低一点，所以想着今年学一学Unity3D，再画多点时间学一学美术，能出一款自己的游戏。<br>这几个月都在用零碎的时间看Unity3D相关的东西，觉得下面这个网站的2D教程都很不错，所以自己先照着网站的教程写了一下demo，觉得对于Unity3D开发2D很有帮助。因为网站是英文的，我在逛了下贴吧，发现好多都是初学者，所以用自己蹩脚的翻译大致翻译了一下教程，一是为了自己记录查看方面，二是希望能够帮助一下热爱游戏的初学者们，翻译有问题的地方还欢迎大家指正。</p>
+<p>游戏原文教程出处：<a href="https://noobtuts.com/unity/2d-pong-game">https://noobtuts.com/unity/2d-pong-game</a><br>我把自己做好的demo放到了国内最大的同性交流平台网站上，基佬嗨皮网，供大家参考：<br><a href="https://github.com/BloodDot/project4unity/tree/master/Pong">https://github.com/BloodDot/project4unity/tree/master/Pong</a></p>
+<p>教程目录</p>
+<p><a href="https://blooddot.cool/2017/02/22/%E9%BB%91%E5%8E%86%E5%8F%B2/Unity%202D%20%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F%EF%BC%88%E4%B8%80%EF%BC%89/">Unity 2D 乓乓游戏（一）</a></p>
+<p><a href="https://blooddot.cool/2021/07/02/%E9%BB%91%E5%8E%86%E5%8F%B2/Unity%202D%20%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F%EF%BC%88%E4%BA%8C%EF%BC%89/">Unity 2D 乓乓游戏（二）</a></p>
+<p><a href="https://blooddot.cool/2021/07/02/%E9%BB%91%E5%8E%86%E5%8F%B2/Unity%202D%20%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F%EF%BC%88%E4%B8%89%EF%BC%89/">Unity 2D 乓乓游戏（三）</a></p>
+<p><a href="https://blooddot.cool/2021/07/02/%E9%BB%91%E5%8E%86%E5%8F%B2/Unity%202D%20%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F%EF%BC%88%E5%9B%9B%EF%BC%89/">Unity 2D 乓乓游戏（四）</a></p>
+<p><a href="https://blooddot.cool/2021/07/02/%E9%BB%91%E5%8E%86%E5%8F%B2/Unity%202D%20%E4%B9%93%E4%B9%93%E6%B8%B8%E6%88%8F%EF%BC%88%E4%BA%94%EF%BC%89/">Unity 2D 乓乓游戏（五）</a></p>
+<p>__本文作者__：雪糕<br />__本文地址__： <a href="http://example.com/posts/dbdef186/">http://example.com/posts/dbdef186/</a> <br />__版权声明__：转载请注明出处！</p>
+]]></content>
+      <categories>
+        <category>黑历史</category>
+      </categories>
+      <tags>
+        <tag>game</tag>
+      </tags>
+  </entry>
+</search>
