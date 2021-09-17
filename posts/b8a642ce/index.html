@@ -23,12 +23,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"blooddot.cool","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="【非原创2D游戏教程】乓乓游戏教程目录地址">
+<meta name="description" content="【非原创2D游戏教程】乓乓游戏 教程目录地址">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unity 2D 乓乓游戏（五）">
 <meta property="og:url" content="https://blooddot.cool/posts/b8a642ce/index.html">
 <meta property="og:site_name" content="雪糕啊哈哈">
-<meta property="og:description" content="【非原创2D游戏教程】乓乓游戏教程目录地址">
+<meta property="og:description" content="【非原创2D游戏教程】乓乓游戏 教程目录地址">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212829.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212855.png">
@@ -364,7 +364,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>【非原创2D游戏教程】乓乓游戏<br><a href="https://blooddot.cool/posts/dbdef186/">教程目录地址</a></p>
+        <p>【非原创2D游戏教程】乓乓游戏
+<a href="https://blooddot.cool/posts/dbdef186/">教程目录地址</a></p>
 <a id="more"></a>
 
 <p>做个球<br>先把下面这个球的图片下载一下</p>
@@ -384,7 +385,8 @@
 <p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213036.png" alt="20210702213036"></p>
 <p>给球添加一下Rigidbody<br>Add Component-&gt;Physics 2D-&gt;Rigidbody 2D<br>然后设置一下参数，像下面这样子</p>
 <p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213056.png" alt="20210702213056"></p>
-<p>好了，我们再来给球添加一个脚本，让它动起来吧<br>Add Component-&gt;New Script，并命名为Ball<br>看下面的代码</p>
+<p>好了，我们再来给球添加一个脚本，让它动起来吧<br>Add Component-&gt;New Script，并命名为Ball
+看下面的代码</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">UnityEngine;</span><br><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Ball</span> : <span class="title">MonoBehaviour</span> &#123;</span><br><span class="line"><span class="keyword">public</span> <span class="built_in">float</span> speed = <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// Initial Velocity</span></span><br><span class="line">        GetComponent&lt;Rigidbody2D&gt;().velocity = Vector2.right * speed;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>然后再加一个speed的变量，用来控制球速，并在初始化的时候，给球一个向右的速度，让它动起来<br>点击调试，可以看到球在两个球拍之间回弹</p>
@@ -393,7 +395,11 @@
 <p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213337.png" alt="20210702213337"></p>
 <p>我们要给Ball脚本添加一个OnCollisionEnter2D方法，用来处理碰撞到物体时的回弹角度</p>
 <p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213407.png" alt="20210702213407"></p>
-<p>上面这个图是展示各个方向的向量值<br>我们要确定的是，弹到球拍上方，中间和下方的向量值，比较发现，上中下是根据Y轴的值来区分的，而且都在-1到1的区间内，我们通过下面的方式来计算<br>|| 1 &lt;- at the top of the racket<br>||<br>|| 0 &lt;- at the middle of the racket<br>||<br>|| -1 &lt;- at the bottom of the racket</p>
+<p>上面这个图是展示各个方向的向量值<br>我们要确定的是，弹到球拍上方，中间和下方的向量值，比较发现，上中下是根据Y轴的值来区分的，而且都在-1到1的区间内，我们通过下面的方式来计算<br>|| 1 &lt;- at the top of the racket
+||
+|| 0 &lt;- at the middle of the racket
+||
+|| -1 &lt;- at the bottom of the racket</p>
 <p>那我们通过什么来确认球的Y轴值呢，这里的Y轴值不是指Y轴的坐标，而是只计算回弹方向的Y轴值，很明显，我们是球打在球拍上，球相对与球拍的位置，就是确认回弹方向的Y轴值，所以我们可以通过球拍的高度来计算Y轴值<br>代码如下：</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">float</span> <span class="title">hitFactor</span>(<span class="params">Vector2 ballPos, Vector2 racketPos,</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="built_in">float</span> racketHeight</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// ascii art:</span></span><br><span class="line">    <span class="comment">// || 1 &lt;- at the top of the racket</span></span><br><span class="line">    <span class="comment">// ||</span></span><br><span class="line">    <span class="comment">// || 0 &lt;- at the middle of the racket</span></span><br><span class="line">    <span class="comment">// ||</span></span><br><span class="line">    <span class="comment">// || -1 &lt;- at the bottom of the racket</span></span><br><span class="line">    <span class="keyword">return</span> (ballPos.y - racketPos.y) / racketHeight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 

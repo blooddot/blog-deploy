@@ -378,12 +378,15 @@
 <h2 id="安装开发环境"><a href="#安装开发环境" class="headerlink" title="安装开发环境"></a>安装开发环境</h2><p>参考：<a target="_blank" rel="noopener" href="https://docs.egret.com/egretpro/docs/guide/getting-started-install">https://docs.egret.com/egretpro/docs/guide/getting-started-install</a></p>
 <p>确保引擎版本：egret engine版本是5.3.7+，egret pro版本是1.6.0+</p>
 <h2 id="创建运行3D示例项目"><a href="#创建运行3D示例项目" class="headerlink" title="创建运行3D示例项目"></a>创建运行3D示例项目</h2><h3 id="3D项目-步骤"><a href="#3D项目-步骤" class="headerlink" title="3D项目-步骤"></a>3D项目-步骤</h3><ol>
-<li>打开EgretPro，点击右边新建按钮，打开创建项目页面<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232255.png" alt="20210701232255"></li>
+<li>打开EgretPro，点击右边新建按钮，打开创建项目页面
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232255.png" alt="20210701232255"></li>
 <li>选择项目目录路径后，点击右下角新建按钮创建项目</li>
 <li>在egret Pro编辑器中点击顶部选择内置或者浏览器选项运行预览</li>
 </ol>
 <h3 id="3D项目-坑点"><a href="#3D项目-坑点" class="headerlink" title="3D项目-坑点"></a>3D项目-坑点</h3><ul>
-<li>编辑器提示3000端口已被占用<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232556.png" alt="20210701232556"><br>  <strong>问题原因</strong>：因为EgretPro打开后会默认启动一个3000端口的http服务器，所以当3000端口被占用时会打开项目失败<br>  <strong>解决方案</strong>：一般造成这种原因是因为我们打开了egret项目进行调试。<ul>
+<li>编辑器提示3000端口已被占用
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232556.png" alt="20210701232556">
+  <strong>问题原因</strong>：因为EgretPro打开后会默认启动一个3000端口的http服务器，所以当3000端口被占用时会打开项目失败<br>  <strong>解决方案</strong>：一般造成这种原因是因为我们打开了egret项目进行调试。<ul>
 <li>如果是没有用webpack方式打包的egret项目可以在egret run命令后加上–port参数指定端口号运行，避免冲突。</li>
 <li>如果是webpack方式打包的egret项目，可以在scripts/config.ts文件中搜索port关键字修改启动时的默认端口号。</li>
 <li>可否修改EgretPro编辑器的默认端口？EgretPro是在Egret3D引擎源码的toolkit/compiler/compiler.js文件中设置的，搜索web: 3000可以查询到，但是修改后编辑器会有其他问题，暂时没有找正确的修改方式</li>
@@ -425,13 +428,16 @@
 </li>
 </ol>
 <h3 id="2D项目-坑点"><a href="#2D项目-坑点" class="headerlink" title="2D项目-坑点"></a>2D项目-坑点</h3><ul>
-<li><p>运行build:library时报错<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232703.png" alt="20210701232703"></p>
+<li><p>运行build:library时报错
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232703.png" alt="20210701232703"></p>
 </li>
 <li><p>*问题原因**：macOS使用的换行符LF，安装的egret库中的运行脚本是CRLF格式，导致运行node命令时解析出错  </p>
 </li>
-<li><p>*解决方案**：用vscode打开3D项目中的node_modules/.bin/egret-pro文件，右下角将换行符格式改为LF并保存<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232724.png" alt="20210701232724"></p>
+<li><p>*解决方案**：用vscode打开3D项目中的node_modules/.bin/egret-pro文件，右下角将换行符格式改为LF并保存
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232724.png" alt="20210701232724"></p>
 </li>
-<li><p>编译库报错<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232817.png" alt="20210701232817"></p>
+<li><p>编译库报错
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232817.png" alt="20210701232817"></p>
 </li>
 <li><p>*问题原因**：2D项目用的Typescript版本太低了，InstanceType是Typescript2.8+的功能  </p>
 </li>
@@ -439,11 +445,18 @@
 </li>
 </ul>
 <h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><ul>
-<li><p>egretProUtil为空<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232835.png" alt="20210701232835"><br>index.html 没有开启pro选项导致，参考步骤9解决</p>
+<li><p>egretProUtil为空
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232835.png" alt="20210701232835">
+index.html 没有开启pro选项导致，参考步骤9解决</p>
 </li>
-<li><p>3D场景加载失败<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232854.png" alt="20210701232854"><br>场景资源路径错误，参考步骤5和11解决</p>
+<li><p>3D场景加载失败
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232854.png" alt="20210701232854">
+场景资源路径错误，参考步骤5和11解决</p>
 </li>
-<li><p>OIMO，Box2D库找不到<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232909.png" alt="20210701232909"><br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232924.png" alt="20210701232924"><br>2D工程没有添加对应库，参考步骤8解决</p>
+<li><p>OIMO，Box2D库找不到
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232909.png" alt="20210701232909">
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232924.png" alt="20210701232924">
+2D工程没有添加对应库，参考步骤8解决</p>
 </li>
 </ul>
 <h2 id="2D项目与3D项目通信"><a href="#2D项目与3D项目通信" class="headerlink" title="2D项目与3D项目通信"></a>2D项目与3D项目通信</h2><h2 id="2D发消息到3D"><a href="#2D发消息到3D" class="headerlink" title="2D发消息到3D"></a>2D发消息到3D</h2><ul>
@@ -466,13 +479,15 @@
 </ul>
 <h2 id="发布项目"><a href="#发布项目" class="headerlink" title="发布项目"></a>发布项目</h2><h3 id="发布项目-步骤"><a href="#发布项目-步骤" class="headerlink" title="发布项目-步骤"></a>发布项目-步骤</h3><p>运行egret publish命令进行打包</p>
 <h3 id="发布项目-坑点"><a href="#发布项目-坑点" class="headerlink" title="发布项目-坑点"></a>发布项目-坑点</h3><ul>
-<li><p>提示box2d.min.js文件找不到<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232943.png" alt="20210701232943"></p>
+<li><p>提示box2d.min.js文件找不到
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701232943.png" alt="20210701232943"></p>
 </li>
 <li><p>*问题原因**：白鹭打包实用的库文件是min.js文件，由于我们拷贝过来的box2d库只有box2d.js，并没有box2d.min.js文件  </p>
 </li>
 <li><p>*解决方案**：在libs/box2d目录下生成min.js文件，最快速简单的解决方法是拷贝一份box2d.js重命名为box2d.min.js</p>
 </li>
-<li><p>提示pro-library.min.js文件找不到<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233044.png" alt="20210701233044"></p>
+<li><p>提示pro-library.min.js文件找不到
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233044.png" alt="20210701233044"></p>
 </li>
 <li><p>*问题原因**：同上  </p>
 </li>
@@ -489,13 +504,15 @@
 </li>
 <li><p>运行2D项目调试，会启动一个web服务器，确保3D项目的资源可以通过web访问到</p>
 </li>
-<li><p>打开egret launcher软件，选择2D项目，点击发布设置，填写应用名称和应用包名<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233128.png" alt="20210701233128"></p>
+<li><p>打开egret launcher软件，选择2D项目，点击发布设置，填写应用名称和应用包名
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233128.png" alt="20210701233128"></p>
 </li>
 <li><p>点击确认后会在2D项目的同目录生成iOS工程项目</p>
 </li>
 <li><p>实用xcode打开该项目</p>
 </li>
-<li><p>打开AppDelegate.mm文件，将_native.config.disableNativeRender设为true<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233149.png" alt="20210701233149"></p>
+<li><p>打开AppDelegate.mm文件，将_native.config.disableNativeRender设为true
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233149.png" alt="20210701233149"></p>
 </li>
 <li><p>选择模拟器，运行调试查看效果</p>
 </li>
@@ -503,10 +520,14 @@
 <h2 id="真机运行"><a href="#真机运行" class="headerlink" title="真机运行"></a>真机运行</h2><ol>
 <li>确保模拟器运行正确的情况下，连接iPhone到Mac并信任</li>
 <li>Xcode选择左上角Xcode -&gt; Preferences -&gt; Accounts界面，登录Apple ID</li>
-<li>选择右下角Manage Certificates按钮<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233208.png" alt="20210701233208"></li>
-<li>打开证书界面后，点击左下角添加证书<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233226.png" alt="20210701233226"></li>
-<li>打开项目设置界面，选择对应开发组<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233242.png" alt="20210701233242"></li>
-<li>点击顶部选择 iPhone设备进行调试<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233258.png" alt="20210701233258"></li>
+<li>选择右下角Manage Certificates按钮
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233208.png" alt="20210701233208"></li>
+<li>打开证书界面后，点击左下角添加证书
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233226.png" alt="20210701233226"></li>
+<li>打开项目设置界面，选择对应开发组
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233242.png" alt="20210701233242"></li>
+<li>点击顶部选择 iPhone设备进行调试
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233258.png" alt="20210701233258"></li>
 <li>首次调试时，iPhone设备要信任证书文件，访问允许网络，可访问web的3D资源（调试时在同一个局域网下即可）</li>
 </ol>
 <h2 id="使用Egret3DExportTools"><a href="#使用Egret3DExportTools" class="headerlink" title="使用Egret3DExportTools"></a>使用Egret3DExportTools</h2><h3 id="Egret3DExportTools-说明"><a href="#Egret3DExportTools-说明" class="headerlink" title="Egret3DExportTools-说明"></a>Egret3DExportTools-说明</h3><p>egret官方有提供Egret3DExportTools工具用于Unity3D中的场景资源导出</p>
@@ -539,7 +560,8 @@
 <li>但是导出后会把我原本的EgretPro场景覆盖，又要重新搭建，效率不高</li>
 <li>猜测tag应该是作为某个配置文件保存在项目本地的，所以项目全局搜索一个tag值，并没有搜索到有用的信息</li>
 <li>猜测tag值可能保存在编辑器中，而非项目中</li>
-<li>编辑器目录中搜索一个tag值，发现有用信息<br><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233319.png" alt="20210701233319"></li>
+<li>编辑器目录中搜索一个tag值，发现有用信息
+<img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210701233319.png" alt="20210701233319"></li>
 <li>原来tag值是配置在引擎库packages/engine目录下的文件</li>
 <li>分别在index.d.ts和index.js文件中添加我们想要的tag值</li>
 <li>重启EgretPro，发现我们添加的tag值果然生效了</li>
