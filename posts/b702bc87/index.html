@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blooddot.cool","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="leetcode 中数组相关的题型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode-数组">
+<meta property="og:url" content="https://blooddot.cool/posts/b702bc87/index.html">
+<meta property="og:site_name" content="雪糕啊哈哈">
+<meta property="og:description" content="leetcode 中数组相关的题型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-1.jpg">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-2.png">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-3.png">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-5.png">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-4.png">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-6.jpg">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-7.gif">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-8.gif">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-10.gif">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-11.png">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-12.png">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-14.png">
+<meta property="og:image" content="https://blooddot.cool/images/leetcode/leetcode-array-14.png">
+<meta property="article:published_time" content="2022-09-21T09:53:23.000Z">
+<meta property="article:modified_time" content="2022-09-21T09:53:23.000Z">
+<meta property="article:author" content="雪糕">
+<meta property="article:tag" content="leetcode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blooddot.cool/images/leetcode/leetcode-array-1.jpg">
+
+
+<link rel="canonical" href="https://blooddot.cool/posts/b702bc87/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>leetcode-数组 | 雪糕啊哈哈</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">雪糕啊哈哈</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">数组理论基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">二维数组结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="nav-number">2.</span> <span class="nav-text">二分查找</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">2.1.</span> <span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A6%E9%97%AD%E5%8F%B3%E9%97%AD%E5%8D%B3-left-right"><span class="nav-number">2.1.1.</span> <span class="nav-text">左闭右闭即[left, right]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A6%E9%97%AD%E5%8F%B3%E5%BC%80%E5%8D%B3-left-right"><span class="nav-number">2.1.2.</span> <span class="nav-text">左闭右开即[left, right)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%A2%98%E7%9B%AE%E6%8E%A8%E8%8D%90"><span class="nav-number">2.2.</span> <span class="nav-text">相关题目推荐</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0"><span class="nav-number">3.</span> <span class="nav-text">移除元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1"><span class="nav-number">3.1.</span> <span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9A%B4%E5%8A%9B%E8%A7%A3%E6%B3%95"><span class="nav-number">3.1.1.</span> <span class="nav-text">暴力解法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95"><span class="nav-number">3.1.2.</span> <span class="nav-text">双指针法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%A2%98%E7%9B%AE%E6%8E%A8%E8%8D%90-1"><span class="nav-number">3.2.</span> <span class="nav-text">相关题目推荐</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84"><span class="nav-number">4.</span> <span class="nav-text">长度最小的子数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-2"><span class="nav-number">4.1.</span> <span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9A%B4%E5%8A%9B%E8%A7%A3%E6%B3%95-1"><span class="nav-number">4.1.1.</span> <span class="nav-text">暴力解法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="nav-number">4.1.2.</span> <span class="nav-text">滑动窗口</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%A2%98%E7%9B%AE%E6%8E%A8%E8%8D%90-2"><span class="nav-number">4.2.</span> <span class="nav-text">相关题目推荐</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5-II"><span class="nav-number">5.</span> <span class="nav-text"> 螺旋矩阵 II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">5.1.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%A2%98%E7%9B%AE%E6%8E%A8%E8%8D%90-3"><span class="nav-number">5.2.</span> <span class="nav-text">相关题目推荐</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="雪糕"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">雪糕</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/blooddot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;blooddot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:blooddot@hotmail.com" title="E-Mail → mailto:blooddot@hotmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blooddot.cool/posts/b702bc87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="雪糕">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="雪糕啊哈哈">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          leetcode-数组
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-21 17:53:23" itemprop="dateCreated datePublished" datetime="2022-09-21T17:53:23+08:00">2022-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/posts/b702bc87/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/b702bc87/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>leetcode 中数组相关的题型</p>
+<a id="more"></a>
+
+<h2 id="数组理论基础"><a href="#数组理论基础" class="headerlink" title="数组理论基础"></a>数组理论基础</h2><blockquote>
+<p>数组是存放在连续内存空间上的相同类型数据的集合。</p>
+</blockquote>
+<p><img src="../../images/leetcode/leetcode-array-1.jpg" alt="leetcode-array-1"></p>
+<ul>
+<li>数组下标都是从0开始的。</li>
+<li>数组内存空间的地址是连续的</li>
+</ul>
+<p>因为数组的在内存空间的地址是连续的，所以我们在删除或者增添元素的时候，就难免要移动其他元素的地址。</p>
+<p><img src="../../images/leetcode/leetcode-array-2.png" alt="leetcode-array-2"></p>
+<p>数组的元素是不能删的，只能覆盖。</p>
+<h3 id="二维数组结构"><a href="#二维数组结构" class="headerlink" title="二维数组结构"></a>二维数组结构</h3><p><img src="../../images/leetcode/leetcode-array-3.png" alt="leetcode-array-3"></p>
+<p>那么二维数组在内存的空间地址是连续的么？</p>
+<p>不同编程语言的内存管理是不一样的，以C++为例，在C++中二维数组是连续分布的。</p>
+<p>我们来做一个实验，C++测试代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test_arr</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> array[<span class="number">2</span>][<span class="number">3</span>] = &#123;</span><br><span class="line">		&#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125;,</span><br><span class="line">		&#123;<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    cout &lt;&lt; &amp;array[<span class="number">0</span>][<span class="number">0</span>] &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; &amp;array[<span class="number">0</span>][<span class="number">1</span>] &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; &amp;array[<span class="number">0</span>][<span class="number">2</span>] &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; &amp;array[<span class="number">1</span>][<span class="number">0</span>] &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; &amp;array[<span class="number">1</span>][<span class="number">1</span>] &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; &amp;array[<span class="number">1</span>][<span class="number">2</span>] &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">test_arr</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试地址为</p>
+<p>0x7ffee4065820 0x7ffee4065824 0x7ffee4065828
+0x7ffee406582c 0x7ffee4065830 0x7ffee4065834
+注意地址为16进制，可以看出二维数组地址是连续一条线的。</p>
+<p>0x7ffee4065820 与 0x7ffee4065824 差了一个4，就是4个字节，因为这是一个int型的数组，所以两个相邻数组元素地址差4个字节。</p>
+<p>0x7ffee4065828 与 0x7ffee406582c 也是差了4个字节，在16进制里8 + 4 = c，c就是12。</p>
+<p><img src="../../images/leetcode/leetcode-array-5.png" alt="leetcode-array-5"></p>
+<p>Java是没有指针的，同时也不对程序员暴露其元素的地址，寻址操作完全交给虚拟机。</p>
+<p>所以看不到每个元素的地址情况，这里我以Java为例，也做一个实验。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test_arr</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[][] arr = &#123;&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;, &#123;<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;, &#123;<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>&#125;, &#123;<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>&#125;&#125;;</span><br><span class="line">    System.out.println(arr[<span class="number">0</span>]);</span><br><span class="line">    System.out.println(arr[<span class="number">1</span>]);</span><br><span class="line">    System.out.println(arr[<span class="number">2</span>]);</span><br><span class="line">    System.out.println(arr[<span class="number">3</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出的地址为：</p>
+<p>[I@7852e922<br>[I@4e25154f<br>[I@70dea4e<br>[I@5c647e05</p>
+<p>这里的数值也是16进制，这不是真正的地址，而是经过处理过后的数值了，我们也可以看出，二维数组的每一行头结点的地址是没有规则的，更谈不上连续。</p>
+<p><img src="../../images/leetcode/leetcode-array-4.png" alt="leetcode-array-4"></p>
+<h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-search/">二分查找</a></h2><blockquote>
+<p>给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line">输入: nums &#x3D; [-1, 0, 3, 5, 9, 12], target &#x3D; 9</span><br><span class="line">输出: 4</span><br><span class="line">解释: 9 出现在 nums 中并且下标为 4</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例 2:</span><br><span class="line">输入: nums &#x3D; [-1, 0, 3, 5, 9, 12], target &#x3D; 2</span><br><span class="line">输出: -1</span><br><span class="line">解释: 2 不存在 nums 中因此返回 -1</span><br></pre></td></tr></table></figure>
+
+<p>提示：  </p>
+<ul>
+<li>你可以假设 nums 中的所有元素是不重复的。</li>
+<li>n 将在 [1, 10000]之间。</li>
+<li>nums 的每个元素都将在 [-9999, 9999]之间。</li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>二分法前提条件</p>
+<ul>
+<li>有序数组</li>
+<li>数组中无重复元素</li>
+</ul>
+<blockquote>
+<p>循环不变量规则: 在while寻找中每一次边界的处理都要坚持根据区间的定义来操作。</p>
+</blockquote>
+<h4 id="左闭右闭即-left-right"><a href="#左闭右闭即-left-right" class="headerlink" title="左闭右闭即[left, right]"></a>左闭右闭即[left, right]</h4><ul>
+<li>while (left &lt;= right) 要使用 &lt;= ，因为left == right是有意义的，所以使用 &lt;=</li>
+<li>if (nums[middle] &gt; target) right 要赋值为 middle - 1，因为当前这个nums[middle]一定不是target，那么接下来要查找的左区间结束下标位置就是 middle - 1</li>
+</ul>
+<p>例如在数组：1, 2, 3, 4, 7, 9, 10中查找元素2，如图所示：</p>
+<p><img src="../../images/leetcode/leetcode-array-6.jpg" alt="leetcode-array-6"></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">search</span>(<span class="params">nums: <span class="built_in">number</span>[], target: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> middle: <span class="built_in">number</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> left: <span class="built_in">number</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> right: <span class="built_in">number</span> = nums.length - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">        <span class="comment">// 位运算 + 防止大数溢出</span></span><br><span class="line">        middle = left + ((right - left) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span> (nums[middle] &gt; target) &#123;</span><br><span class="line">            right = middle - <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[middle] &lt; target) &#123;</span><br><span class="line">            left = middle + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> middle;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="左闭右开即-left-right"><a href="#左闭右开即-left-right" class="headerlink" title="左闭右开即[left, right)"></a>左闭右开即[left, right)</h4><ul>
+<li>while (left &lt; right)，这里使用 &lt; , 因为left == right在区间[left, right)是没有意义的</li>
+<li>if (nums[middle] &gt; target) right 更新为 middle，因为当前nums[middle]不等于target，去左区间继续寻找，而寻找区间是左闭右开区间，所以right更新为middle，即：下一个查询区间不会去比较nums[middle]</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">search</span>(<span class="params">nums: <span class="built_in">number</span>[], target: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> middle: <span class="built_in">number</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> left: <span class="built_in">number</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> right: <span class="built_in">number</span> = nums.length;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">        <span class="comment">// 位运算 + 防止大数溢出</span></span><br><span class="line">        middle = left + ((right - left) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span> (nums[middle] &gt; target) &#123;</span><br><span class="line">            right = middle;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[middle] &lt; target) &#123;</span><br><span class="line">            left = middle + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> middle;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="相关题目推荐"><a href="#相关题目推荐" class="headerlink" title="相关题目推荐"></a>相关题目推荐</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/">34. 在排序数组中查找元素的第一个和最后一个位置</a><br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/search-insert-position/">35. 搜索插入位置</a><br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sqrtx/">69. x 的平方根 </a><br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-perfect-square/">367. 有效的完全平方数</a></p>
+<h2 id="移除元素"><a href="#移除元素" class="headerlink" title="移除元素"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-element/">移除元素</a></h2><blockquote>
+<p>给你一个数组 nums 和一个值 val，你需要 <strong>原地</strong> 移除所有数值等于 val 的元素，并返回移除后数组的新长度。不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 <strong>原地</strong> 修改输入数组。元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line">给定 nums &#x3D; [3,2,2,3], val &#x3D; 3, </span><br><span class="line">函数应该返回新的长度 2, </span><br><span class="line">并且 nums 中的前两个元素均为 2。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例 2:</span><br><span class="line">给定 nums &#x3D; [0,1,2,2,3,0,4,2], val &#x3D; 2,</span><br><span class="line">函数应该返回新的长度 5,</span><br><span class="line">并且 nums 中的前五个元素为 0, 1, 3, 0, 4。</span><br></pre></td></tr></table></figure>
+
+<h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>要知道数组的元素在内存地址中是连续的，不能单独删除数组中的某个元素，只能覆盖。</p>
+<h4 id="暴力解法"><a href="#暴力解法" class="headerlink" title="暴力解法"></a>暴力解法</h4><p>这个题目暴力的解法就是两层for循环，一个for循环遍历数组元素 ，第二个for循环更新数组。</p>
+<p><img src="../../images/leetcode/leetcode-array-7.gif" alt="leetcode-array-7"></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeElement</span>(<span class="params">nums:<span class="built_in">number</span>[], val:<span class="built_in">number</span></span>):<span class="title">number</span></span>&#123;</span><br><span class="line">    <span class="keyword">let</span> size = nums.length;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (nums[i] == val) &#123; <span class="comment">// 发现需要移除的元素，就将数组集体向前移动一位</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> j = i + <span class="number">1</span>; j &lt; size; j++) &#123;</span><br><span class="line">                nums[j - <span class="number">1</span>] = nums[j];</span><br><span class="line">            &#125;</span><br><span class="line">            i--; <span class="comment">// 因为下标i以后的数值都向前移动了一位，所以i也向前移动一位</span></span><br><span class="line">            size--; <span class="comment">// 此时数组的大小-1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;        </span><br><span class="line">    <span class="keyword">return</span> size;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>时间复杂度：O(n^2)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<h4 id="双指针法"><a href="#双指针法" class="headerlink" title="双指针法"></a>双指针法</h4><p>通过一个快指针和慢指针在一个for循环下完成两个for循环的工作。</p>
+<ul>
+<li>快指针：寻找新数组的元素 ，新数组就是不含有目标元素的数组</li>
+<li>慢指针：指向更新 新数组下标的位置</li>
+</ul>
+<p><img src="../../images/leetcode/leetcode-array-8.gif" alt="leetcode-array-8"></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeElement</span>(<span class="params">nums: <span class="built_in">number</span>[], val: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> slowIndex: <span class="built_in">number</span> = <span class="number">0</span>, <span class="attr">fastIndex</span>: <span class="built_in">number</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (fastIndex &lt; nums.length) &#123;</span><br><span class="line">        <span class="keyword">if</span> (nums[fastIndex] !== val) &#123;</span><br><span class="line">            nums[slowIndex++] = nums[fastIndex];</span><br><span class="line">        &#125;</span><br><span class="line">        fastIndex++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> slowIndex;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<h3 id="相关题目推荐-1"><a href="#相关题目推荐-1" class="headerlink" title="相关题目推荐"></a>相关题目推荐</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-duplicates-from-sorted-array/">26. 删除有序数组中的重复项</a><br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/move-zeroes/">283. 移动零</a><br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/backspace-string-compare/">844. 比较含退格的字符串</a><br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/squares-of-a-sorted-array/">977. 有序数组的平方</a></p>
+<h2 id="长度最小的子数组"><a href="#长度最小的子数组" class="headerlink" title="长度最小的子数组"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-size-subarray-sum/">长度最小的子数组</a></h2><blockquote>
+<p>给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的 连续 子数组，并返回其长度。如果不存在符合条件的子数组，返回 0。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例：</span><br><span class="line">输入：s &#x3D; 7, nums &#x3D; [2, 3, 1, 2, 4, 3]</span><br><span class="line">输出：2</span><br><span class="line">解释：子数组 [4, 3] 是该条件下的长度最小的子数组。</span><br></pre></td></tr></table></figure>
+
+<h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><h4 id="暴力解法-1"><a href="#暴力解法-1" class="headerlink" title="暴力解法"></a>暴力解法</h4><p>两个for循环，然后不断的寻找符合条件的子序列。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">minSubArrayLen</span>(<span class="params">target: <span class="built_in">number</span>, nums: <span class="built_in">number</span>[]</span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> sum = <span class="number">0</span>; <span class="comment">// 子序列的数值之和</span></span><br><span class="line">    <span class="keyword">let</span> subLength = <span class="number">0</span>; <span class="comment">// 子序列的长度</span></span><br><span class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; nums.length; i++) &#123; <span class="comment">// 设置子序列起点为i</span></span><br><span class="line">        sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (int j = i; j &lt; nums.size(); j++) &#123; <span class="comment">// 设置子序列终止位置为j</span></span><br><span class="line">            sum += nums[j];</span><br><span class="line">            <span class="keyword">if</span> (sum &gt;= s) &#123; <span class="comment">// 一旦发现子序列和超过了s，更新result</span></span><br><span class="line">                subLength = j - i + <span class="number">1</span>; <span class="comment">// 取子序列的长度</span></span><br><span class="line">                result = result &lt; subLength ? result : subLength;</span><br><span class="line">                <span class="keyword">break</span>; <span class="comment">// 因为我们是找符合条件最短的子序列，所以一旦符合条件就break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果result没有被赋值的话，就返回0，说明没有符合条件的子序列</span></span><br><span class="line">    <span class="keyword">return</span> result == INT32_MAX ? <span class="number">0</span> : result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n^2)
+空间复杂度：O(1)</p>
+<h4 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h4><blockquote>
+<p>不断的调节子序列的起始位置和终止位置，从而得出我们要想的结果。</p>
+</blockquote>
+<p>首先要思考 如果用一个 for 循环，那么应该表示 滑动窗口的起始位置，还是终止位置。</p>
+<p>如果只用一个 for 循环来表示 滑动窗口的起始位置，那么如何遍历剩下的终止位置？</p>
+<p>此时难免再次陷入 暴力解法的怪圈。</p>
+<p>所以 只用一个 for 循环，那么这个循环的索引，一定是表示滑动窗口的终止位置。</p>
+<p>那么问题来了，滑动窗口的起始位置如何移动呢？</p>
+<p>这里还是以题目中的示例来举例，s=7， 数组是 2，3，1，2，4，3，来看一下查找的过程：</p>
+<p><img src="../../images/leetcode/leetcode-array-10.gif" alt="leetcode-array-10"></p>
+<p>在本题中实现滑动窗口，主要确定如下三点：</p>
+<ul>
+<li>窗口定义：满足其和 ≥ s 的长度最小的 连续 子数组。</li>
+<li>窗口的起始位置如何移动：如果当前窗口的值大于s了，窗口就要向前移动了（也就是该缩小了）。</li>
+<li>窗口的结束位置如何移动：窗口的结束位置就是遍历数组的指针，也就是for循环里的索引。</li>
+</ul>
+<p><img src="../../images/leetcode/leetcode-array-11.png" alt="leetcode-array-11"></p>
+<p>滑动窗口的精妙之处在于根据当前子序列和大小的情况，不断调节子序列的起始位置。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">minSubArrayLen</span>(<span class="params">target: <span class="built_in">number</span>, nums: <span class="built_in">number</span>[]</span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="built_in">Number</span>.MAX_SAFE_INTEGER;</span><br><span class="line">    <span class="keyword">let</span> left = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> right = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (right &lt; nums.length) &#123;</span><br><span class="line">        sum += nums[right];</span><br><span class="line">        <span class="keyword">while</span> (sum &gt;= target) &#123;</span><br><span class="line">            result = <span class="built_in">Math</span>.min(result, right - left + <span class="number">1</span>);</span><br><span class="line">            sum -= nums[left];</span><br><span class="line">            left++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        right++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果result没有被赋值的话，就返回0，说明没有符合条件的子序列</span></span><br><span class="line">    <span class="keyword">return</span> result === <span class="built_in">Number</span>.MAX_SAFE_INTEGER ? <span class="number">0</span> : result;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n)
+空间复杂度：O(1)</p>
+<h3 id="相关题目推荐-2"><a href="#相关题目推荐-2" class="headerlink" title="相关题目推荐"></a>相关题目推荐</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-window-substring/">76. 最小覆盖子串</a>
+<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/fruit-into-baskets/">904. 水果成篮</a></p>
+<h2 id="螺旋矩阵-II"><a href="#螺旋矩阵-II" class="headerlink" title=" 螺旋矩阵 II"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/spiral-matrix-ii/"> 螺旋矩阵 II</a></h2><blockquote>
+<p>给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。</p>
+</blockquote>
+<p><img src="../../images/leetcode/leetcode-array-12.png" alt="leetcode-array-12"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：n &#x3D; 3</span><br><span class="line">输出：[[1,2,3],[8,9,4],[7,6,5]]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例 2：</span><br><span class="line">输入：n &#x3D; 1</span><br><span class="line">输出：[[1]]</span><br></pre></td></tr></table></figure>
+
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>模拟顺时针画矩阵的过程:</p>
+<ul>
+<li>填充上行从左到右</li>
+<li>填充右列从上到下</li>
+<li>填充下行从右到左</li>
+<li>填充左列从下到上
+由外向内一圈一圈这么画下去，每画一条边都要坚持一致的左闭右开，或者左开右闭的原则。</li>
+</ul>
+<p>左闭右开的原则画法：</p>
+<p><img src="../../images/leetcode/leetcode-array-14.png" alt="leetcode-array-14"></p>
+<p>这里每一种颜色，代表一条边，每一个拐角处让给新的一条边来继续画。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generateMatrix</span>(<span class="params">n: <span class="built_in">number</span></span>): <span class="title">number</span>[][] </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> loopNum: <span class="built_in">number</span> = <span class="built_in">Math</span>.floor(n / <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">const</span> resArr: <span class="built_in">number</span>[][] = <span class="keyword">new</span> <span class="built_in">Array</span>(n).fill(<span class="number">1</span>).map(<span class="function"><span class="params">i</span> =&gt;</span> <span class="keyword">new</span> <span class="built_in">Array</span>(n));</span><br><span class="line">    <span class="keyword">let</span> chunkNum: <span class="built_in">number</span> = n - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">let</span> startX: <span class="built_in">number</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> startY: <span class="built_in">number</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> value: <span class="built_in">number</span> = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">let</span> x: <span class="built_in">number</span>, <span class="attr">y</span>: <span class="built_in">number</span>;</span><br><span class="line">    <span class="keyword">while</span> (loopNum--) &#123;</span><br><span class="line">        x = startX;</span><br><span class="line">        y = startY;</span><br><span class="line">        <span class="keyword">while</span> (x &lt; startX + chunkNum) &#123;</span><br><span class="line">            resArr[y][x] = value;</span><br><span class="line">            x++;</span><br><span class="line">            value++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (y &lt; startY + chunkNum) &#123;</span><br><span class="line">            resArr[y][x] = value;</span><br><span class="line">            y++;</span><br><span class="line">            value++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (x &gt; startX) &#123;</span><br><span class="line">            resArr[y][x] = value;</span><br><span class="line">            x--;</span><br><span class="line">            value++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (y &gt; startY) &#123;</span><br><span class="line">            resArr[y][x] = value;</span><br><span class="line">            y--;</span><br><span class="line">            value++;</span><br><span class="line">        &#125;</span><br><span class="line">        startX++;</span><br><span class="line">        startY++;</span><br><span class="line">        chunkNum -= <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (n % <span class="number">2</span> === <span class="number">1</span>) &#123;</span><br><span class="line">        resArr[startX][startY] = value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> resArr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="相关题目推荐-3"><a href="#相关题目推荐-3" class="headerlink" title="相关题目推荐"></a>相关题目推荐</h3><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/spiral-matrix/">54. 螺旋矩阵</a><br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/">剑指 Offer 29. 顺时针打印矩阵</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="../../images/leetcode/leetcode-array-14.png" alt="leetcode-array-14"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://github.com/youngyangyang04/leetcode-master/blob/master/problems/%E6%95%B0%E7%BB%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.md">数组理论基础</a><br><a target="_blank" rel="noopener" href="https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0704.%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.md">二分查找</a><br><a target="_blank" rel="noopener" href="https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.md">移除元素</a><br><a target="_blank" rel="noopener" href="https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0209.%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84.md">长度最小的子数组</a><br><a target="_blank" rel="noopener" href="https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0059.%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5II.md">螺旋矩阵II</a><br><a target="_blank" rel="noopener" href="https://github.com/youngyangyang04/leetcode-master/blob/master/problems/%E6%95%B0%E7%BB%84%E6%80%BB%E7%BB%93%E7%AF%87.md">数组总结篇</a></p>
+<p>本文作者：雪糕<br />本文地址： <a href="https://blooddot.cool/posts/b702bc87/">https://blooddot.cool/posts/b702bc87/</a> <br />版权声明：转载请注明出处！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/leetcode/" rel="tag"><i class="fa fa-tag"></i> leetcode</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/d3b10281/" rel="prev" title="使用 Typescript 实现单例模式">
+                  <i class="fa fa-chevron-left"></i> 使用 Typescript 实现单例模式
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fas fa-ice-cream"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">雪糕</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://blooddot-cool.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blooddot.cool/posts/b702bc87/";
+    this.page.identifier = "posts/b702bc87/";
+    this.page.title = "leetcode-数组";
+    };
+  NexT.utils.loadComments('#disqus_thread', () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://blooddot-cool.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

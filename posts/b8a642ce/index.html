@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blooddot.cool","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="【非原创2D游戏教程】乓乓游戏 教程目录地址">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity 2D 乓乓游戏（五）">
+<meta property="og:url" content="https://blooddot.cool/posts/b8a642ce/index.html">
+<meta property="og:site_name" content="雪糕啊哈哈">
+<meta property="og:description" content="【非原创2D游戏教程】乓乓游戏 教程目录地址">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212829.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212855.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212915.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212934.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213010.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213036.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213056.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213307.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213337.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213407.png">
+<meta property="article:published_time" content="2017-03-07T03:22:00.000Z">
+<meta property="article:modified_time" content="2017-03-07T03:22:00.000Z">
+<meta property="article:author" content="雪糕">
+<meta property="article:tag" content="game">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212829.png">
+
+
+<link rel="canonical" href="https://blooddot.cool/posts/b8a642ce/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Unity 2D 乓乓游戏（五） | 雪糕啊哈哈</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">雪糕啊哈哈</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="雪糕"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">雪糕</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/blooddot" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;blooddot" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:blooddot@hotmail.com" title="E-Mail → mailto:blooddot@hotmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blooddot.cool/posts/b8a642ce/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="雪糕">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="雪糕啊哈哈">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity 2D 乓乓游戏（五）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-03-07 11:22:00" itemprop="dateCreated datePublished" datetime="2017-03-07T11:22:00+08:00">2017-03-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%BB%91%E5%8E%86%E5%8F%B2/" itemprop="url" rel="index"><span itemprop="name">黑历史</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/posts/b8a642ce/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/b8a642ce/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>【非原创2D游戏教程】乓乓游戏
+<a href="https://blooddot.cool/posts/dbdef186/">教程目录地址</a></p>
+<a id="more"></a>
+
+<p>做个球<br>先把下面这个球的图片下载一下</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212829.png" alt="20210702212829"></p>
+<p>然后设置一下我们刚才导入的图片</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212855.png" alt="20210702212855"></p>
+<p>把球的图片拖到场景里面来吧，看下面</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212915.png" alt="20210702212915"></p>
+<p>给球添加一下Collider（碰撞器）组件<br>Add Component-&gt;Physics 2D-&gt;Box Collider 2D</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702212934.png" alt="20210702212934"></p>
+<p>我们的球是要在碰到墙的时候回弹回来的，举个栗子，当面对面碰到墙的时候，是直接回弹回来，当以45度朝着墙碰的时候，它会以-45度回弹回来</p>
+<p>听起来有些复杂，涉及到了数学相关的知识，但Unity关于这方面提供了很完善的支持，用它自带的Physics Material，就能够实现回弹的效果，不用管其他杂七杂八的事情</p>
+<p>让我们来创建一个Physics2D Material吧<br>在Project Area（项目区域）里面一次选择Create-&gt;Physics2D Material，然后命名为BallMaterial<br>在Inspector（检视）面板里面设置一下</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213010.png" alt="20210702213010"></p>
+<p>可以看到我们将Friction（摩擦力）设置为0 Bounciness（反弹力）设置为1</p>
+<p>然后在球的Collider的Material设置一下刚才创建的Material</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213036.png" alt="20210702213036"></p>
+<p>给球添加一下Rigidbody<br>Add Component-&gt;Physics 2D-&gt;Rigidbody 2D<br>然后设置一下参数，像下面这样子</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213056.png" alt="20210702213056"></p>
+<p>好了，我们再来给球添加一个脚本，让它动起来吧<br>Add Component-&gt;New Script，并命名为Ball
+看下面的代码</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">UnityEngine;</span><br><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Ball</span> : <span class="title">MonoBehaviour</span> &#123;</span><br><span class="line"><span class="keyword">public</span> <span class="built_in">float</span> speed = <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// Initial Velocity</span></span><br><span class="line">        GetComponent&lt;Rigidbody2D&gt;().velocity = Vector2.right * speed;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后再加一个speed的变量，用来控制球速，并在初始化的时候，给球一个向右的速度，让它动起来<br>点击调试，可以看到球在两个球拍之间回弹</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213307.gif" alt="20210702213307"></p>
+<p>好了，直线的回弹已经有效果了，斜着的回弹我们要实现下面这种回弹的方向</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213337.png" alt="20210702213337"></p>
+<p>我们要给Ball脚本添加一个OnCollisionEnter2D方法，用来处理碰撞到物体时的回弹角度</p>
+<p><img src="https://raw.githubusercontent.com/blooddot/FigureBed/master/blog/20210702213407.png" alt="20210702213407"></p>
+<p>上面这个图是展示各个方向的向量值<br>我们要确定的是，弹到球拍上方，中间和下方的向量值，比较发现，上中下是根据Y轴的值来区分的，而且都在-1到1的区间内，我们通过下面的方式来计算<br>|| 1 &lt;- at the top of the racket
+||
+|| 0 &lt;- at the middle of the racket
+||
+|| -1 &lt;- at the bottom of the racket</p>
+<p>那我们通过什么来确认球的Y轴值呢，这里的Y轴值不是指Y轴的坐标，而是只计算回弹方向的Y轴值，很明显，我们是球打在球拍上，球相对与球拍的位置，就是确认回弹方向的Y轴值，所以我们可以通过球拍的高度来计算Y轴值<br>代码如下：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">float</span> <span class="title">hitFactor</span>(<span class="params">Vector2 ballPos, Vector2 racketPos,</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="built_in">float</span> racketHeight</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// ascii art:</span></span><br><span class="line">    <span class="comment">// || 1 &lt;- at the top of the racket</span></span><br><span class="line">    <span class="comment">// ||</span></span><br><span class="line">    <span class="comment">// || 0 &lt;- at the middle of the racket</span></span><br><span class="line">    <span class="comment">// ||</span></span><br><span class="line">    <span class="comment">// || -1 &lt;- at the bottom of the racket</span></span><br><span class="line">    <span class="keyword">return</span> (ballPos.y - racketPos.y) / racketHeight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在碰撞方法里面分别判断左球拍，和右球拍的回弹计算</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnCollisionEnter2D</span>(<span class="params">Collision2D col</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// Note: &#x27;col&#x27; holds the collision information. If the</span></span><br><span class="line">    <span class="comment">// Ball collided with a racket, then:</span></span><br><span class="line">    <span class="comment">// col.gameObject is the racket</span></span><br><span class="line">    <span class="comment">// col.transform.position is the racket&#x27;s position</span></span><br><span class="line">    <span class="comment">// col.collider is the racket&#x27;s collider</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Hit the left Racket?</span></span><br><span class="line">    <span class="keyword">if</span> (col.gameObject.name == <span class="string">&quot;RacketLeft&quot;</span>) &#123;</span><br><span class="line">        <span class="comment">// Calculate hit Factor</span></span><br><span class="line">        <span class="built_in">float</span> y = hitFactor(transform.position,</span><br><span class="line">        col.transform.position,</span><br><span class="line">        col.collider.bounds.size.y);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Calculate direction, make length=1 via .normalized</span></span><br><span class="line">        Vector2 dir = <span class="keyword">new</span> Vector2(<span class="number">1</span>, y).normalized;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Set Velocity with dir * speed</span></span><br><span class="line">        GetComponent&lt;Rigidbody2D&gt;().velocity = dir * speed;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Hit the right Racket?</span></span><br><span class="line">    <span class="keyword">if</span> (col.gameObject.name == <span class="string">&quot;RacketRight&quot;</span>) &#123;</span><br><span class="line">        <span class="comment">// Calculate hit Factor</span></span><br><span class="line">        <span class="built_in">float</span> y = hitFactor(transform.position,</span><br><span class="line">        col.transform.position,</span><br><span class="line">        col.collider.bounds.size.y);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Calculate direction, make length=1 via .normalized</span></span><br><span class="line">        Vector2 dir = <span class="keyword">new</span> Vector2(<span class="number">-1</span>, y).normalized;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Set Velocity with dir * speed</span></span><br><span class="line">        GetComponent&lt;Rigidbody2D&gt;().velocity = dir * speed;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>好了，试试看吧，现在已经可以让球自由的弹来弹去了</p>
+<hr>
+<p>总结♂<br>在这个教程里，我们学会了安装和使用Unity，能够创建场景，添加文理，运用基本的Unity物理系统和写一些简单的脚本</p>
+<p>记住啊，Unity用起来很简单，我们大多时候只需要用鼠标操作，以及些一些简单的脚本，就能够实现很多牛逼的效果，所以不用太害怕去创造新东西。<br>下面列出一堆，你可以继续为这个游戏添加的有趣功能<br>1.给小球添加追踪的效果<br>2.添加音效<br>3.添加一个显示分数<br>4.让球动的越来越快<br>5.加一个AI，现在我们只能左手和右手玩。。。<br>6.添加一个初始菜单和结算界面7.发挥你的想象吧~</p>
+<p>本文作者：雪糕<br />本文地址： <a href="https://blooddot.cool/posts/b8a642ce/">https://blooddot.cool/posts/b8a642ce/</a> <br />版权声明：转载请注明出处！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/game/" rel="tag"><i class="fa fa-tag"></i> game</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/d7388789/" rel="prev" title="Unity 2D 乓乓游戏（四）">
+                  <i class="fa fa-chevron-left"></i> Unity 2D 乓乓游戏（四）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/1867545/" rel="next" title="electron-builder使用简介">
+                  electron-builder使用简介 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fas fa-ice-cream"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">雪糕</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://blooddot-cool.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blooddot.cool/posts/b8a642ce/";
+    this.page.identifier = "posts/b8a642ce/";
+    this.page.title = "Unity 2D 乓乓游戏（五）";
+    };
+  NexT.utils.loadComments('#disqus_thread', () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://blooddot-cool.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
